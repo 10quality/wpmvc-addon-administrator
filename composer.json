@@ -1,0 +1,20 @@
+{
+    "name": "10quality/wpmvc-addon-administrator",
+    "description": "Custom WordPress settings and admin menus for WordPress MVC (WPMVC) framework.",
+    "license": "MIT",
+    "keywords": ["wpmvc","wordpress","administrator"],
+    "require": {
+        "php": ">=5.4.0",
+        "10quality/wpmvc-core": ">=3.1.0",
+        "10quality/wpmvc-addon": "1.0.*"
+    },
+    "autoload": {
+        "files": [
+            "addon/Lib/functions.php"
+        ],
+        "psr-4": {
+            "WPMVC\\Addons\\Administrator\\": "addon/"
+        }
+    },
+    "minimum-stability": "dev"
+}
