@@ -31,7 +31,7 @@ class AdministratorAddon extends Addon
     {
         static::$instance = $this;
         add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
-        add_action( 'admin_init', [&$this, 'init'], 5 );
+        add_action( 'admin_menu', [&$this, 'settings_init'], 5 );
         add_filter( 'wpmvc_addon_administrator_controls', [&$this, 'register_controls'], 1 );
         add_filter( 'administrator_no_value_fields', function() {
             return [
@@ -45,11 +45,11 @@ class AdministratorAddon extends Addon
      * Inits
      * @since 1.0.0
      * 
-     * @hook admin_init
+     * @hook admin_menu
      */
-    public function init()
+    public function settings_init()
     {
-        $this->mvc->call( 'ConfigController@controls' );
+        $this->mvc->call( 'AdminController@init' );
     }
     /**
      * Registers administrator controls.

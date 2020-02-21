@@ -88,7 +88,7 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      * @since 1.0.0
      * @var string
      */
-    protected $save_message = __( 'Settings saved!', 'wpmvc-addon-administrator' );
+    protected $save_message = null;
     /**
      * Default constructor.
      * @since 1.0.0
@@ -98,7 +98,10 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
     public function __construct( $id = null )
     {
         // Forces adds settings field
-        $this->aliases['_settings'] => 'field_settings';
+        $this->aliases['_settings'] = 'field__settings';
+        $this->attributes['_settings'] = [];
+        $this->save_message = __( 'Settings saved!', 'wpmvc-addon-administrator' );
+        $this->init();
         // Construct
         if ( ! empty( $id ) )
             $this->load( $this->id );
@@ -113,8 +116,8 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      */
     public function &__get( $property )
     {
-        if ( array_key_exists( $property, $this->_settings ) ) {
-            return $this->_settings[$property];
+        if ( array_key_exists( $property, $this->attributes['_settings'] ) ) {
+            return $this->attributes['_settings'][$property];
         } elseif ( property_exists( $this, $property ) ) {
             return $this->$property;
         }
@@ -131,12 +134,30 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      */
     public function __set( $property, $value )
     {
-        if ( array_key_exists( $property, $this->_settings ) ) {
-            $this->_settings[$property] = $value;
+        if ( array_key_exists( $property, $this->attributes['_settings'] ) ) {
+            $this->attributes['_settings'][$property] = $value;
         } elseif ( $property !== 'id' && property_exists( $this, $property ) ) {
             $this->$property = $value;
         }
         parent::__set( $property, $value );
+    }
+    /**
+     * Finds record based on an ID.
+     * @since 1.0.0
+     *
+     * @param mixed $id Record ID.
+     */
+    public static function find( $id = 0 )
+    {
+        return new self( $id );
+    }
+    /**
+     * Inits model.
+     * @since 1.0.0
+     */
+    protected function init()
+    {
+        // TODO on final class
     }
     /**
      * Loads model from db.
@@ -148,12 +169,12 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
     {
         parent::load( $id );
         // Update settings based on fields
-        if ( !is_array( $this->_settings ) )
-            $this->_settings = [];
+        if ( empty( $this->attributes['_settings'] ) || !is_array( $this->attributes['_settings'] ) )
+            $this->attributes['_settings'] = [];
         // Load tab settings and those stored @ options
         foreach ( $this->tabs as $tab ) {
             foreach ( $tab['fields'] as $field_id => $field ) {
-                if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+                if ( array_key_exists( 'type', $field ) && in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
                     continue;
                 }
                 if ( !array_key_exists( $field_id, $this->_settings ) ) {

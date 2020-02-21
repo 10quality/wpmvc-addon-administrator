@@ -29,6 +29,7 @@ class AdminController extends Controller
         // Registered settings models
         $models = $this->get_models();
         foreach ( $models as $key => $model ) {
+            //vdump_and_die( array_key_exists( 'capability', $model->menu ) ? $model->menu['capability'] : 'manage_options' );
             if ( array_key_exists( 'parent', $model->menu ) ) {
                 add_submenu_page(
                     $model->menu['parent'],
@@ -89,7 +90,7 @@ class AdminController extends Controller
                 ) {
                     $controls_in_use[] = is_array( $field['control'] ) ? $field['control']['type'] : $field['control'];
                 }
-            }, $this->tabs[$current_tab]['fields'] );
+            }, $model->tabs[$current_tab]['fields'] );
             $controls = $this->get_controls( $controls_in_use );
             // Model handling
             $model->load( $model->id );
@@ -97,9 +98,9 @@ class AdminController extends Controller
             if ( $_POST ) {
                 $response = $this->save( $model, $current_tab );
             }
-            $this->render( $model->get_updated_instance(), $current_tab, $response, $controls );
+            $model = $model->get_updated_instance();
+            $this->render( $model, $current_tab, $response, $controls );
         }
-        return parent::__call( $method, $args );
     }
     /**
      * Saves current tab data.
@@ -152,20 +153,24 @@ class AdminController extends Controller
      * @param \WPMVC\Response                                     &$response   Save response.
      * @param array                                               &$controls   Controls in use.
      */
-    protected function render( SettingsModel &$model, $current_tab, Response &$response, &$controls )
+    protected function render( SettingsModel &$model, $current_tab, &$response, &$controls )
     {
         // Prepare fields
         $fields = $model->tabs[$current_tab]['fields'];
         foreach ( $fields as $field_id => $field ) {
-            if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+            if ( array_key_exists( 'type', $field ) && in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
                 continue;
             }
             $fields[$field_id]['id'] = $field_id;
             $fields[$field_id]['value'] = $model->$field_id;
             $fields[$field_id]['_control_key'] =
-                array_key_exists( 'control', $field ) && array_key_exists( 'type', $field['control'] ) && !empty( $field['control']['type'] )
-                    ? $field['control']['type']
-                    : 'input';
+                array_key_exists( 'control', $field )
+                    && is_array( $field['control'] )
+                    && array_key_exists( 'type', $field['control'] )
+                    && is_array( $field['control']['type'] )
+                    && !empty( $field['control']['type'] )
+                        ? $field['control']['type']
+                        : 'input';
             if ( $fields[$field_id]['value'] === null && array_key_exists( 'default', $field ) ) {
                 $fields[$field_id]['value'] = $field['default'];
             }
@@ -219,7 +224,7 @@ class AdminController extends Controller
                 return $reflector->newInstance();
             }, apply_filters( 'administrator_models', [] ) ),
             function( $model ) {
-                return $model && $model instanceof SettingsModel && ! empty( $model->menu );
+                return $model && $model instanceof SettingsModel;
             }
         );
     }

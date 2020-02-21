@@ -19,7 +19,7 @@ $section_opened = false;
         <p><?php echo $model->tabs[$tab]['description'] ?></p>
     <?php endif ?>
     <?php foreach ( $fields as $field_id => $field ) : ?>
-        <?php if ( $field['type'] === 'section_open' ) : ?>
+        <?php if ( array_key_exists( 'type', $field ) && $field['type'] === 'section_open' ) : ?>
             <?php if ( $section_opened ) : ?></table><?php endif ?>
             <?php $section_opened = true ?>
             <div id="<?php echo esc_attr( $field_id ) ?>" class="tab-section fieldset">
@@ -30,11 +30,11 @@ $section_opened = false;
                     <p class="description"><?php echo $field['description'] ?></p>
                 <?php endif ?>
                 <table class="form-table">
-        <?php elseif ( $field['type'] === 'section_close' && $section_opened ) : ?>
+        <?php elseif ( array_key_exists( 'type', $field ) && $field['type'] === 'section_close' && $section_opened ) : ?>
                 </table>
             </div><!--.tab-section-->
             <?php $section_opened = false ?>
-        <?php elseif ( $field['type'] === 'section_separator' ) : ?>
+        <?php elseif ( array_key_exists( 'type', $field ) && $field['type'] === 'section_separator' ) : ?>
             <?php if ( $section_opened ) : ?></table><?php endif ?>
             <hr id="<?php echo esc_attr( $field_id ) ?>"/>
             <?php if ( $section_opened ) : ?><table class="form-table"><?php endif ?>
@@ -45,7 +45,7 @@ $section_opened = false;
                     <?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?>
                 </th>
                 <td>
-                    <?php if ( array_key_exists( $control, $controls ) ) : ?>
+                    <?php if ( array_key_exists( $field['_control_key'], $controls ) ) : ?>
                         <?php $controls[$field['_control_key']]->render( $field ) ?>
                     <?php endif ?>
                     <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>

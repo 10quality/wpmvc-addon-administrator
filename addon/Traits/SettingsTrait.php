@@ -22,7 +22,7 @@ trait SettingsTrait
     public static function instance()
     {
         if ( ! isset( static::$instance ) ) {
-            static::$instance = self::find();
+            static::$instance = self::find( self::ID );
         }
         return static::$instance;
     }
