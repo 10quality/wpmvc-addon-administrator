@@ -10,6 +10,7 @@ use WPMVC\Addons\Administrator\Controls\RadioControl;
 use WPMVC\Addons\Administrator\Controls\PagesControl;
 use WPMVC\Addons\Administrator\Controls\ChooseControl;
 use WPMVC\Addons\Administrator\Controls\DatepickerControl;
+use WPMVC\Addons\Administrator\Controls\MediaControl;
 
 /**
  * Add-on configuration hooks.
@@ -40,6 +41,7 @@ class ConfigController extends Controller
         $classes[PagesControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\PagesControl';
         $classes[ChooseControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\ChooseControl';
         $classes[DatepickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\DatepickerControl';
+        $classes[MediaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\MediaControl';
         return $classes;
     }
 }
