@@ -1,0 +1,29 @@
+/*!
+ * Radio control styling.
+ * @author 10 Quality <info@10quality.com>
+ * @package wpmvc-addon-administrator
+ * @license MIT
+ * @version 1.0.0
+ */
+.radio-group {
+    display: flex;
+}
+.radio-group.direction-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.radio-group.direction-row label {
+    margin-right: 10px;
+}
+.radio-group.direction-row label:last-child {
+    margin-right: 0;
+}
+.radio-group.direction-column {
+    flex-direction: column;
+}
+.radio-group.direction-column label {
+    margin-bottom: 10px;
+}
+.radio-group.direction-column label:last-child {
+    margin-bottom: 0;
+}

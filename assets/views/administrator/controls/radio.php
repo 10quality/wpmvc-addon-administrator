@@ -9,7 +9,7 @@
  * @version 1.0.0
  */
 ?>
-<div class="radio-group">
+<div class="radio-group direction-<?php echo isset( $control ) && array_key_exists( 'direction', $control ) ? esc_attr( $control['direction'] ) : 'row' ?>">
     <?php foreach ( $options as $val => $label ) : ?>
         <input id="<?php echo esc_attr( $id ) ?>-<?php echo esc_attr( $val ) ?>"
             type="radio"

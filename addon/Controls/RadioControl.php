@@ -32,4 +32,17 @@ class RadioControl extends Control
      * @var string
      */
     protected $view = 'administrator.controls.radio';
+    /**
+     * Enqueues styles and scripts especific to the control.
+     * @since 1.0.0
+     */
+    public function enqueue()
+    {
+        wp_enqueue_style(
+            'wpmvc-administrator-radio',
+            addon_assets_url( 'css/radio.css', __FILE__ ),
+            [],
+            '1.0.0'
+        );
+    }
 }
