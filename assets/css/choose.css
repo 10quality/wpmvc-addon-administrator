@@ -1,0 +1,44 @@
+/*!
+ * Choose control styling.
+ * @author 10 Quality <info@10quality.com>
+ * @package wpmvc-addon-administrator
+ * @license MIT
+ * @version 1.0.0
+ */
+.choose {
+    display: inline-flex;
+    border: none;
+    align-items: stretch;
+    flex-wrap: wrap;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+.choose label {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.choose input[type="radio"] {
+    display: none;
+}
+.choose .choose-option {
+    padding: 5px 15px;
+    margin: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.choose label:first-child .choose-option {
+    border-radius: 5px 0 0 5px;
+}
+.choose label:last-child .choose-option {
+    border-radius: 0 5px 5px 0;
+}
+.choose .choose-option:hover {
+    background: #DDD;
+}
+.choose input:checked ~ .choose-option {
+    background: #007cba;
+    color: #FFFFFF;
+}

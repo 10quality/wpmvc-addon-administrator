@@ -8,6 +8,7 @@ use WPMVC\Addons\Administrator\Controls\CheckboxControl;
 use WPMVC\Addons\Administrator\Controls\SelectControl;
 use WPMVC\Addons\Administrator\Controls\RadioControl;
 use WPMVC\Addons\Administrator\Controls\PagesControl;
+use WPMVC\Addons\Administrator\Controls\ChooseControl;
 
 /**
  * Add-on configuration hooks.
@@ -36,6 +37,7 @@ class ConfigController extends Controller
         $classes[SelectControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\SelectControl';
         $classes[RadioControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\RadioControl';
         $classes[PagesControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\PagesControl';
+        $classes[ChooseControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\ChooseControl';
         return $classes;
     }
 }
