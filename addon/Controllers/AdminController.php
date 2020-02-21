@@ -78,8 +78,10 @@ class AdminController extends Controller
                 || ! is_array( $model->tabs[$current_tab]['fields'] )
                 || empty( $model->tabs[$current_tab]['fields'] )
             ) {
-                // TODO: Return 404
-                return;
+                global $wp_query;
+                $wp_query->set_404();
+                status_header( 404 );
+                die;
             }
             //
             // Obtain all registered controls
