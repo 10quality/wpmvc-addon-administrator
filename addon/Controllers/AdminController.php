@@ -119,7 +119,10 @@ class AdminController extends Controller
         foreach ( $model->tabs[$current_tab]['fields'] as $field_id => $field ) {
             $value = Request::input(
                 $field_id,
-                null,
+                array_key_exists( 'type', $field )
+                    && in_array( $field['type'], apply_filters( 'administrator_bool_fields', [] ) )
+                        ? 0
+                        : null,
                 false,
                 array_key_exists( 'sanitize_callback', $field ) ? $field['sanitize_callback'] : true
             );

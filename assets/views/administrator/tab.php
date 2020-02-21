@@ -40,7 +40,7 @@ $section_opened = false;
             <?php if ( $section_opened ) : ?><table class="form-table"><?php endif ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
-            <tr id="<?php echo esc_attr( $field_id ) ?>">
+            <tr id="tr-<?php echo esc_attr( $field_id ) ?>">
                 <th>
                     <?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?>
                 </th>

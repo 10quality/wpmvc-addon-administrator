@@ -13,7 +13,7 @@
     <input id="<?php echo esc_attr( $id ) ?>"
         type="checkbox"
         name="<?php echo esc_attr( isset( $name ) ? $name : $id ) ?>"
-        class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
+        class="<?php echo isset( $class ) ? esc_attr( implode( ' ', $class ) ) : '' ?>"
         value="yes"
         <?php if ( $value === 'yes' ) : ?>checked="checked"<?php endif ?>
         <?php echo $html_attributes ?>

@@ -22,5 +22,5 @@ $class = array_merge( isset( $control ) && array_key_exists( 'wide', $control ) 
         <option value="<?php echo esc_attr( $val ) ?>"
             <?php if ( $value == $val ) : ?>selected="selected"<?php endif ?>
             ><?php echo esc_attr( $label ) ?></option>
-    <?php endif ?>
+    <?php endforeach ?>
 </select>

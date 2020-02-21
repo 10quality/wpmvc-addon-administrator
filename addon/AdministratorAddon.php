@@ -40,6 +40,11 @@ class AdministratorAddon extends Addon
                 'section_separator',
             ];
         }, 1 );
+        add_filter( 'administrator_bool_fields', function() {
+            return [
+                'checkbox',
+            ];
+        }, 1 );
     }
     /**
      * Inits
