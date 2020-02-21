@@ -10,7 +10,7 @@
  */
 ?>
 <div class="choose direction-<?php echo isset( $control ) && array_key_exists( 'direction', $control ) ? esc_attr( $control['direction'] ) : 'row' ?>"
-    <?php if ( array_key_exists( 'background', $options) ) : ?>style="background:<?php echo esc_attr( $options['background'] ) ?>;"<?php endif ?>
+    <?php if ( isset( $control ) && array_key_exists( 'background', $control) ) : ?>style="background:<?php echo esc_attr( $control['background'] ) ?>;"<?php endif ?>
     >
     <?php foreach ( $options as $val => $options ) : ?>
         <label for="<?php echo esc_attr( $id ) ?>-<?php echo esc_attr( $val ) ?>"
