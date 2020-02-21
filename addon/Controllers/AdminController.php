@@ -121,22 +121,21 @@ class AdminController extends Controller
                 false,
                 array_key_exists( 'sanitize_callback', $field ) ? $field['sanitize_callback'] : true
             );
+            $model->$field_id = $value;
+        }
+        foreach ( $model->tabs[$current_tab]['fields'] as $field_id => $field ) {
             if ( array_key_exists( 'validate_callback', $field )
                 && is_callable( $field['validate_callback'] )
-                && !call_user_func_array( $field['validate_callback'], [$value] )
+                && !call_user_func_array( $field['validate_callback'], [$model->$field_id, $model] )
             ) {
                 $response->error( $field_id, array_key_exists( 'validate_message', $field )
-                    ? sprintf(
-                        $field['validate_message'],
-                        array_key_exists( 'title', $field ) ? $field['title'] : $field_id
-                    )
+                    ? $field['validate_message']
                     : sprintf(
                         __( '<b>%s</b> is invalid.', 'wpmvc-addon-administrator' ),
                         array_key_exists( 'title', $field ) ? $field['title'] : $field_id
                     )
                 );
             }
-            $model->$field_id = $value;
         }
         if ( $response->passes ) {
             $model = apply_filters( 'administrator_settings_before_save_' . $model->id, $model, $current_tab );
