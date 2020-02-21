@@ -269,12 +269,14 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      */
     public function get_url( $tab = null, $args = [] )
     {
-        $url = admin_url( 'options-general.php?page=' . $this->id );
+        $url = array_key_exists( 'parent', $this->menu ) && $this->menu['parent'] === 'options-general.php'
+            ? admin_url( 'options-general.php?page=' . $this->id )
+            : admin_url( 'admin.php?page=' . $this->id );
         if ( $tab && $tab !== $this->default_tab ) {
-            add_query_arg( 'tab', $tab, $url );
+            $url = add_query_arg( 'tab', $tab, $url );
         }
         if ( !empty( $args ) && is_array( $args ) ) {
-            add_query_arg( $args, $url );
+            $url = add_query_arg( $args, $url );
         }
         return $url;
     }

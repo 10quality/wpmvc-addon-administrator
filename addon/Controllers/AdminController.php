@@ -190,7 +190,7 @@ class AdminController extends Controller
         }
         // Tabs
         if ( $model->has_nav_tab() ) {
-            AdministratorAddon::view( 'administrator.tab_nav', ['model' => &$model, 'tab' => $current_tab] );
+            AdministratorAddon::view( 'administrator.nav_tab', ['model' => &$model, 'tab' => $current_tab] );
         }
         // Render form
         if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
