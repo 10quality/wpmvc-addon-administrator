@@ -2,9 +2,9 @@
  * Gulp
  *
  * @author 10 Quality <info@10quality.com>
- * @package wpmvc-addon-customizer
+ * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.0
  */
 
 'use strict';
@@ -19,4 +19,11 @@ gulp.task('vendorcss', function() {
         .pipe(gulp.dest('./assets/css'));
 });
 
-gulp.task('default', gulp.parallel('vendorcss'));
+gulp.task('vendorfonts', function() {
+    return gulp.src([
+            './node_modules/font-awesome/fonts/**/*',
+        ])
+        .pipe(gulp.dest('./assets/fonts'));
+});
+
+gulp.task('default', gulp.parallel('vendorcss', 'vendorfonts'));
