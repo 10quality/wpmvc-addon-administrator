@@ -6,6 +6,7 @@ use ReflectionClass;
 use WPMVC\MVC\Request;
 use WPMVC\MVC\Response;
 use WPMVC\MVC\Controller;
+use WPMVC\Addons\Administrator\AdministratorAddon;
 use WPMVC\Addons\Administrator\Abstracts\Control;
 use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
 
@@ -34,7 +35,7 @@ class AdminController extends Controller
                     $model->title,
                     array_key_exists( 'title', $model->menu ) ? $model->menu['title'] : $model->title,
                     array_key_exists( 'capability', $model->menu ) ? $model->menu['capability'] : 'manage_options',
-                    $model->id,
+                    $model->get_page_slug(),
                     [&$this, 'process_' . $key],
                     array_key_exists( 'position', $model->menu ) ? $model->menu['position'] : null
                 );
@@ -43,7 +44,7 @@ class AdminController extends Controller
                     $model->title,
                     array_key_exists( 'title', $model->menu ) ? $model->menu['title'] : $model->title,
                     array_key_exists( 'capability', $model->menu ) ? $model->menu['capability'] : 'manage_options',
-                    $model->id,
+                    $model->get_page_slug(),
                     [&$this, 'process_' . $key],
                     array_key_exists( 'icon', $model->menu ) ? $model->menu['icon'] : '',
                     array_key_exists( 'position', $model->menu ) ? $model->menu['position'] : null
@@ -66,9 +67,9 @@ class AdminController extends Controller
             // Prepare
             $models = $this->get_models();
             $key = str_replace( 'process_', '', $method );
-            $current_tab = Request::input( 'tab', SettingsModel::NO_TAB );
             // Validate
             $model = array_key_exists( $key, $models ) && $models[$key] ? $models[$key] : null;
+            $current_tab = Request::input( 'tab', $model->default_tab );
             if ( empty( $model )
                 || ! array_key_exists( $current_tab, $model->tabs )
                 || ! is_array( $model->tabs[$current_tab] )
@@ -79,6 +80,7 @@ class AdminController extends Controller
                 // TODO: Return 404
                 return;
             }
+            //
             // Obtain all registered controls
             $controls_in_use = [];
             array_map( function( $field ) use( &$controls_in_use ) {
@@ -91,11 +93,11 @@ class AdminController extends Controller
             $controls = $this->get_controls( $controls_in_use );
             // Model handling
             $model->load();
-            $response = null;
+            $response = new Response;
             if ( $_POST ) {
                 $response = $this->save( $model, $current_tab );
             }
-            $this->render( $model->get_updated_instance(), $current_tab );
+            $this->render( $model->get_updated_instance(), $current_tab, $response, $controls );
         }
         return parent::__call( $method, $args );
     }
@@ -103,17 +105,36 @@ class AdminController extends Controller
      * Renders output.
      * @since 1.0.0
      * 
-     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel &$model
      * @param string                                              $current_tab
+     * @param \WPMVC\Response                                     &$response   Save response.
+     * @param array                                               &$controls   Controls in use.
      */
-    public function render( SettingsModel &$model, $current_tab, Response $response )
+    public function render( SettingsModel &$model, $current_tab, Response &$response, &$controls )
     {
         // Enqueue
         $model->enqueue();
         foreach ( $controls as $key => $control ) {
             $control->enqueue();
         }
+        wp_enqueue_style( 'font-awesome' );
         do_action( 'administrator_enqueue_' . $model->id );
+        // Render header
+        AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );
+        // Tabs
+        if ( $model->has_nav_tab() ) {
+            AdministratorAddon::view( 'administrator.tab_nav', ['model' => &$model, 'tab' => $current_tab] );
+        }
+        // Render form
+        if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
+            AdministratorAddon::view( 'administrator.form-wrapper-open', ['model' => &$model, 'tab' => $current_tab] );
+        }
+        AdministratorAddon::view( 'administrator.tab', ['model' => &$model, 'tab' => $current_tab, 'controls' => &$controls] );
+        if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
+            AdministratorAddon::view( 'administrator.form-wrapper-close', ['model' => &$model, 'tab' => $current_tab] );
+        }
+        // Render footer
+        AdministratorAddon::view( 'administrator.footer', ['model' => &$model, 'tab' => $current_tab] );
     }
     /**
      * Renders output.

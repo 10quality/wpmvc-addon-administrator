@@ -33,9 +33,16 @@ class AdministratorAddon extends Addon
         add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
         add_action( 'admin_init', [&$this, 'init'], 5 );
         add_filter( 'wpmvc_addon_administrator_controls', [&$this, 'register_controls'], 1 );
+        add_filter( 'administrator_no_value_fields', function() {
+            return [
+                'section_open',
+                'section_close',
+                'section_separator',
+            ];
+        }, 1 );
     }
     /**
-     * Registers administrator controls.
+     * Inits
      * @since 1.0.0
      * 
      * @hook admin_init

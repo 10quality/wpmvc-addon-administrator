@@ -7,6 +7,7 @@ use WPMVC\Request;
 use WPMVC\MVC\Models\OptionModel;
 use WPMVC\Addons\Administrator\Contracts\Enqueueable;
 use WPMVC\Addons\Administrator\Contracts\Instanceable;
+use WPMVC\Addons\Administrator\Contracts\Manageable;
 
 /**
  * Administrator settings model.
@@ -19,7 +20,7 @@ use WPMVC\Addons\Administrator\Contracts\Instanceable;
  * @license MIT
  * @version 1.0.0
  */
-class SettingsModel extends OptionModel implements Enqueueable, Instanceable
+class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Manageable
 {
     /**
      * Settings model instance.
@@ -69,7 +70,118 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable
      * @since 1.0.0
      * @var bool
      */
-    protected $display_tab_nav = true;
+    protected $display_nav_tab = true;
+    /**
+     * Flag that indicates if form can upload files.
+     * @since 1.0.0
+     * @var bool
+     */
+    protected $can_upload_files = true;
+    /**
+     * Custom page slug.
+     * @since 1.0.0
+     * @var string
+     */
+    protected $page_slug = null;
+    /**
+     * Default constructor.
+     * @since 1.0.0
+     * 
+     * @param string $id Model ID.
+     */
+    public function __construct( $id = null )
+    {
+        // Forces adds settings field
+        $this->aliases['_settings'] => 'field_settings';
+        // Construct
+        parent::__construct( $id );
+    }
+    /**
+     * Getter function.
+     * @since 1.0.0
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function &__get( $property )
+    {
+        if ( array_key_exists( $property, $this->_settings ) ) {
+            return $this->_settings[$property];
+        } elseif ( property_exists( $this, $property ) ) {
+            return $this->$property;
+        }
+        return parent::__get( $property );
+    }
+    /**
+     * Setter function.
+     * @since 1.0.0
+     *
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return object
+     */
+    public function __set( $property, $value )
+    {
+        if ( array_key_exists( $property, $this->_settings ) ) {
+            $this->_settings[$property] = $value;
+        } elseif ( property_exists( $this, $property ) ) {
+            $this->$property = $value;
+        }
+        parent::__set( $property, $value );
+    }
+    /**
+     * Loads model from db.
+     * @since 1.0.0
+     *
+     * @param string $id Option key ID.
+     */
+    public function load( $id )
+    {
+        parent::load( $id );
+        // Update settings based on fields
+        if ( !is_array( $this->_settings ) )
+            $this->_settings = [];
+        // Load tab settings and those stored @ options
+        foreach ( $this->tabs as $tab ) {
+            foreach ( $tab['fields'] as $id => $field ) {
+                if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+                    continue;
+                }
+                if ( !array_key_exists( $id, $this->_settings ) ) {
+                    $this->_settings[$id] = null;
+                }
+                if ( is_array( $field ) && array_key_exists( 'storage', $field ) && $field['storage'] === 'option' ) {
+                    $this->_settings[$id] = get_option( $id, null );
+                }
+            }
+        }
+    }
+    /**
+     * Saves current model in the db.
+     * Returns flag indicating if save was made.
+     * @since 1.0.0
+     *
+     * @return bool.
+     */
+    public function save()
+    {
+        if ( ! $this->is_loaded() ) return false;
+        // Save those stored @ options
+        foreach ( $this->tabs as $tab ) {
+            foreach ( $tab['fields'] as $id => $field ) {
+                if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+                    continue;
+                }
+                if ( is_array( $field ) && array_key_exists( 'storage', $field ) && $field['storage'] === 'option' ) {
+                    update_option( $id, $this->_settings[$id], !array_key_exists( 'autoload', $field ) || $field['autoload'] );
+                    unset( $this->_settings[$id] );
+                }
+            }
+        }
+        return parent::save();
+    }
     /**
      * Returns and updates static instance.
      * @since 1.0.0
@@ -88,5 +200,54 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable
     public function enqueue()
     {
         // TODO: Based on control.
+    }
+    /**
+     * Returns flag indicating if settings object is empty.
+     * Meaning that it has no fields to display.
+     * @since 1.0.0
+     * *
+     * @return bool
+     */
+    public function is_empty()
+    {
+        return empty( $this->tabs );
+    }
+    /**
+     * Returns flag indicating if object has a tab navigation to display.
+     * @since 1.0.0
+     * *
+     * @return bool
+     */
+    public function has_nav_tab()
+    {
+        return !$this->is_empty()
+            && $this->display_nav_tab
+            && count( $this->tabs ) > 1;
+    }
+    /**
+     * Returns page slug for management purposes.
+     * @since 1.0.0
+     * 
+     * @return string
+     */
+    public function get_page_slug()
+    {
+        return $this->page_slug ? $this->page_slug : $this->id;
+    }
+    /**
+     * Returns an url within the settings management module.
+     * @since 1.0.0
+     * @return string
+     */
+    public function get_url( $tab = null, $args = [] )
+    {
+        $url = admin_url( 'options-general.php?page=' . $this->id );
+        if ( $tab && $tab !== $this->default_tab ) {
+            add_query_arg( 'tab', $tab, $url );
+        }
+        if ( !empty( $args ) && is_array( $args ) ) {
+            add_query_arg( $args, $url );
+        }
+        return $url;
     }
 }

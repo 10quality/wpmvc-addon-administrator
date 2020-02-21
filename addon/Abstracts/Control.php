@@ -27,7 +27,7 @@ abstract class Control implements Enqueueable, Renderable
      * @since 1.0.0
      * @var string
      */
-    protected $view = 'admin.controls.input';
+    protected $view = 'administrator.controls.input';
     /**
      * Enqueues styles and scripts especific to the control.
      * @since 1.0.0
