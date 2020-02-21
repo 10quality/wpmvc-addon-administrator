@@ -18,16 +18,16 @@ $section_opened = false;
     <?php if ( array_key_exists( 'description', $model->tabs[$tab] ) ) : ?>
         <p><?php echo $model->tabs[$tab]['description'] ?></p>
     <?php endif ?>
-    <?php foreach ( $model->tabs[$tab]['fields'] as $field_id => $field ) : ?>
+    <?php foreach ( $fields as $field_id => $field ) : ?>
         <?php if ( $field['type'] === 'section_open' ) : ?>
             <?php if ( $section_opened ) : ?></table><?php endif ?>
             <?php $section_opened = true ?>
             <div id="<?php echo esc_attr( $field_id ) ?>" class="tab-section fieldset">
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
-                    <h3  ><?php echo $field['title'] ?></h3>
+                    <h3><?php echo $field['title'] ?></h3>
                 <?php endif ?>
-                <?php if ( array_key_exists( 'description', $field ) ) : ?>
-                    <p class="description"></p>
+                <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
+                    <p class="description"><?php echo $field['description'] ?></p>
                 <?php endif ?>
                 <table class="form-table">
         <?php elseif ( $field['type'] === 'section_close' && $section_opened ) : ?>
@@ -40,10 +40,19 @@ $section_opened = false;
             <?php if ( $section_opened ) : ?><table class="form-table"><?php endif ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
-            <?php $control = array_key_exists( 'control', $field ) && array_key_exists( 'type', $field['control'] ) ? $field['control']['type'] : 'input' ?>
-            <?php if ( array_key_exists( $control, $controls ) ) : ?>
-                <?php $controls[$control]->render( $field['control'] ) ?>
-            <?php endif ?>
+            <tr id="<?php echo esc_attr( $field_id ) ?>">
+                <th>
+                    <?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?>
+                </th>
+                <td>
+                    <?php if ( array_key_exists( $control, $controls ) ) : ?>
+                        <?php $controls[$field['_control_key']]->render( $field ) ?>
+                    <?php endif ?>
+                    <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
+                        <br><p class="description"><?php echo $field['description'] ?></p>
+                    <?php endif ?>
+                </td>
+            </tr>
             <?php if ( !$section_opened ) : ?></table><?php endif ?>
         <?php endif ?>
     <?php endforeach ?>

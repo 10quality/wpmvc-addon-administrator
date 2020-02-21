@@ -108,7 +108,7 @@ class AdminController extends Controller
      * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel &$model
      * @param string                                              $current_tab
      * 
-     * @return 
+     * @return \WPMVC\Response
      */
     protected function save( SettingsModel &$model, $current_tab )
     {
@@ -154,6 +154,29 @@ class AdminController extends Controller
      */
     protected function render( SettingsModel &$model, $current_tab, Response &$response, &$controls )
     {
+        // Prepare fields
+        $fields = $model->tabs[$current_tab]['fields'];
+        foreach ( $fields as $field_id => $field ) {
+            if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+                continue;
+            }
+            $fields[$field_id]['id'] = $field_id;
+            $fields[$field_id]['value'] = $model->$field_id;
+            $fields[$field_id]['_control_key'] =
+                array_key_exists( 'control', $field ) && array_key_exists( 'type', $field['control'] ) && !empty( $field['control']['type'] )
+                    ? $field['control']['type']
+                    : 'input';
+            if ( $fields[$field_id]['value'] === null && array_key_exists( 'default', $field ) ) {
+                $fields[$field_id]['value'] = $field['default'];
+            }
+            $attributes = [];
+            if ( array_key_exists( 'attributes', $field ) ) {
+                foreach ( $field['attributes'] as $key => $value) {
+                    $attributes[] = esc_attr( $key ) . '="'. esc_attr( $value )  .'"';
+                }
+            }
+            $field['html_attributes'] = implode( ' ', $attributes );
+        }
         // Enqueue
         $model->enqueue();
         foreach ( $controls as $key => $control ) {
@@ -175,24 +198,12 @@ class AdminController extends Controller
         if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
             AdministratorAddon::view( 'administrator.form-wrapper-open', ['model' => &$model, 'tab' => $current_tab] );
         }
-        AdministratorAddon::view( 'administrator.tab', ['model' => &$model, 'tab' => $current_tab, 'controls' => &$controls] );
+        AdministratorAddon::view( 'administrator.tab', ['model' => &$model, 'tab' => $current_tab, 'controls' => &$controls, 'fields' => &$fields] );
         if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
             AdministratorAddon::view( 'administrator.form-wrapper-close', ['model' => &$model, 'tab' => $current_tab] );
         }
         // Render footer
         AdministratorAddon::view( 'administrator.footer', ['model' => &$model, 'tab' => $current_tab] );
-    }
-    /**
-     * Renders output.
-     * @since 1.0.0
-     * 
-     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
-     * @param string                                              $current_tab
-     * 
-     * @return \WPMVC\Response
-     */
-    public function save( SettingsModel &$model, $current_tab )
-    {
     }
     /**
      * Returns array collection with setting models available.
