@@ -163,14 +163,7 @@ class AdminController extends Controller
             }
             $fields[$field_id]['id'] = $field_id;
             $fields[$field_id]['value'] = $model->$field_id;
-            $fields[$field_id]['_control_key'] =
-                array_key_exists( 'control', $field )
-                    && is_array( $field['control'] )
-                    && array_key_exists( 'type', $field['control'] )
-                    && is_array( $field['control']['type'] )
-                    && !empty( $field['control']['type'] )
-                        ? $field['control']['type']
-                        : 'input';
+            $fields[$field_id]['_control_key'] = array_key_exists( 'type', $field ) ? $field['type'] : 'input';
             if ( $fields[$field_id]['value'] === null && array_key_exists( 'default', $field ) ) {
                 $fields[$field_id]['value'] = $field['default'];
             }
