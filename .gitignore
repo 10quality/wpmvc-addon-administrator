@@ -6,3 +6,4 @@
 # Generated files
 .tmp
 composer.lock
+package-lock.json
