@@ -54,7 +54,8 @@ class DatepickerControl extends Control
             'wpmvc-administrator-datepicker',
             addon_assets_url( 'js/jquery.datepicker.js', __FILE__ ),
             ['jquery-ui-datepicker'],
-            '1.0.0'
+            '1.0.0',
+            true
         );
     }
 }

@@ -20,6 +20,13 @@ gulp.task('vendorcss', function() {
         .pipe(gulp.dest('./assets/css'));
 });
 
+gulp.task('vendorjs', function() {
+    return gulp.src([
+            './node_modules/wordpress-media-gallery/dist/jquery.wp-media-uploader.min.js',
+        ])
+        .pipe(gulp.dest('./assets/js'));
+});
+
 gulp.task('vendorfonts', function() {
     return gulp.src([
             './node_modules/font-awesome/fonts/**/*',
@@ -27,4 +34,4 @@ gulp.task('vendorfonts', function() {
         .pipe(gulp.dest('./assets/fonts'));
 });
 
-gulp.task('default', gulp.parallel('vendorcss', 'vendorfonts'));
+gulp.task('default', gulp.parallel('vendorcss', 'vendorfonts', 'vendorjs'));

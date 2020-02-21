@@ -17,7 +17,8 @@
   "homepage": "https://github.com/10quality/wpmvc-addon-administrator#readme",
   "devDependencies": {
     "font-awesome": "^4.7.0",
+    "gulp": "^4.0.2",
     "jquery-ui": "^1.12.1",
-    "gulp": "^4.0.2"
+    "wordpress-media-gallery": "^1.2.0"
   }
 }
