@@ -38,6 +38,7 @@ class AdministratorAddon extends Addon
                 'section_open',
                 'section_close',
                 'section_separator',
+                'callback',
             ];
         }, 1 );
         add_filter( 'administrator_bool_fields', function() {

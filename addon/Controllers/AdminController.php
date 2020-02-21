@@ -83,7 +83,8 @@ class AdminController extends Controller
                 status_header( 404 );
                 die;
             }
-            //
+            // Filters
+            $model = apply_filters( 'administrator_model_' . $key, $model, $current_tab );
             // Obtain all registered controls
             $controls_in_use = [];
             array_map( function( $field ) use( &$controls_in_use ) {

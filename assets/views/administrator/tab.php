@@ -38,6 +38,12 @@ $section_opened = false;
             <?php if ( $section_opened ) : ?></table><?php endif ?>
             <hr id="<?php echo esc_attr( $field_id ) ?>"/>
             <?php if ( $section_opened ) : ?><table class="form-table"><?php endif ?>
+        <?php elseif ( array_key_exists( 'type', $field )
+            && $field['type'] === 'callback'
+            && array_key_exists( 'callback', $field )
+            && is_callable( $field['callback'] )
+        ) : ?>
+            <?php call_user_func_array( $field['callback'], [$field_id] ) ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
             <tr id="tr-<?php echo esc_attr( $field_id ) ?>">
