@@ -10,8 +10,9 @@
  */
 $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) && $control['show_input'];
 ?>
-<a href="#" class="insert-media" data-editor="editor-<?php echo esc_attr( $id ) ?>">
-    <?php if ( !isset( $control ) || !array_key_exists( 'show_icon', $control ) || $control['show_icon'] === true ) ) : ?>
+<a href="#" class="insert-media button"
+    data-editor="editor-<?php echo esc_attr( $id ) ?>"class="d">
+    <?php if ( !isset( $control ) || !array_key_exists( 'show_icon', $control ) || $control['show_icon'] === true ) : ?>
         <span class="dashicons dashicons-admin-media"></span>
     <?php endif ?>
     <?php echo isset( $control ) && array_key_exists( 'button_label', $control ) ? $control['button_label'] : __( 'Add media' ) ?>
@@ -24,7 +25,7 @@ $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) &&
     data-target="#media-<?php echo esc_attr( $id ) ?>"
 >
     <div class="attachment">
-        <img alt="{{ alt }}" height="<?php echo isset( $control ) && array_key_exists( 'height', $control ) ? $control['height'] : 75 ) ?>"/>
+        <img alt="{{ alt }}" height="<?php echo isset( $control ) && array_key_exists( 'height', $control ) ? $control['height'] : 75 ?>"/>
         <?php if ( isset( $control ) && array_key_exists( 'type', $control ) && $control['type'] === 'url' ) : ?>
             <span class="name-value">{{ url }}</span>
             <input id="<?php echo esc_attr( $id ) ?>"
@@ -46,8 +47,8 @@ $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) &&
     <?php if ( isset( $attachment ) && $attachment ) : ?>
         <div class="attachment">
             <img alt="<?php echo esc_attr( $attachment->alt ) ?>"
-                src="<?php echo esc_attr( $attachment->medium_url ) ?>"
-                height="<?php echo isset( $control ) && array_key_exists( 'height', $control ) ? $control['height'] : 75 ) ?>"
+                src="<?php echo esc_url( $attachment->medium_url ? $attachment->medium_url : $attachment->url ) ?>"
+                height="<?php echo isset( $control ) && array_key_exists( 'height', $control ) ? $control['height'] : 75 ?>"
                 />
             <input id="<?php echo esc_attr( $id ) ?>"
                 type="<?php echo $show_input ? 'text' : 'hidden' ?>"
