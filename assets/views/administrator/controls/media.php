@@ -9,6 +9,7 @@
  * @version 1.0.0
  */
 $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) && $control['show_input'];
+$class = array_merge( isset( $control ) && array_key_exists( 'wide', $control ) && $control['wide'] ? ['widefat'] : [], isset( $class ) ? $class : [] );
 ?>
 <a href="#" class="insert-media button"
     data-editor="editor-<?php echo esc_attr( $id ) ?>"class="d">
@@ -27,17 +28,19 @@ $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) &&
     <div class="attachment">
         <img alt="{{ alt }}" height="<?php echo isset( $control ) && array_key_exists( 'height', $control ) ? $control['height'] : 75 ?>"/>
         <?php if ( isset( $control ) && array_key_exists( 'type', $control ) && $control['type'] === 'url' ) : ?>
-            <span class="name-value">{{ url }}</span>
+            <?php if ( ! $show_input ) : ?><span class="name-value">{{ url }}</span><?php endif ?>
             <input id="<?php echo esc_attr( $id ) ?>"
                 type="<?php echo $show_input ? 'url' : 'hidden' ?>"
                 name="<?php echo esc_attr( $id ) ?>"
                 value="{{ url }}"
+                class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
                 <?php echo $html_attributes ?>/>
         <?php else : ?>
             <input id="<?php echo esc_attr( $id ) ?>"
                 type="<?php echo $show_input ? 'text' : 'hidden' ?>"
                 name="<?php echo esc_attr( $id ) ?>"
                 value="{{ id }}"
+                class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
                 <?php echo $html_attributes ?>/>
         <?php endif ?>
     </div>
@@ -54,16 +57,18 @@ $show_input = isset( $control ) && array_key_exists( 'show_input', $control ) &&
                 type="<?php echo $show_input ? 'text' : 'hidden' ?>"
                 name="<?php echo esc_attr( $id ) ?>"
                 value="<?php echo esc_attr( $attachment->ID ) ?>"
+                class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
                 <?php echo $html_attributes ?>
             />
         </div>
-    <?php else : ?>
+    <?php elseif ( ! empty( $value ) ) : ?>
         <div class="attachment">
-            <span class="name-value"><?php echo $value ?></span>
+            <?php if ( ! $show_input ) : ?><span class="name-value"><?php echo $value ?></span><?php endif ?>
             <input id="<?php echo esc_attr( $id ) ?>"
                 type="<?php echo $show_input ? 'url' : 'hidden' ?>"
                 name="<?php echo esc_attr( $id ) ?>"
                 value="<?php echo esc_url( $value ) ?>"
+                class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
                 <?php echo $html_attributes ?>
             />
         </div>
