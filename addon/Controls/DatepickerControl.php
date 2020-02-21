@@ -39,9 +39,15 @@ class DatepickerControl extends Control
     public function enqueue()
     {
         wp_enqueue_style(
+            'jquery-ui-theme',
+            addon_assets_url( 'css/jquery-ui.theme.min.css', __FILE__ ),
+            [],
+            '1.12.1'
+        );
+        wp_enqueue_style(
             'jquery-ui-datepicker',
             addon_assets_url( 'css/datepicker.css', __FILE__ ),
-            [],
+            ['jquery-ui-theme'],
             '1.12.1'
         );
         wp_enqueue_script(
