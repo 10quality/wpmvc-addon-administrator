@@ -61,7 +61,7 @@ class ChooseControl extends Control
             if ( filter_var( $option['value'], FILTER_VALIDATE_URL ) ) {
                 $option['type'] = 'url';
             } elseif ( strpos( $option['value'], 'fa' ) === 0 ) {
-                $option['type'] = 'url';
+                $option['type'] = 'fa';
             } elseif ( strpos( $option['value'], 'dashicon' ) === 0 ) {
                 $option['type'] = 'dashicon';
             }

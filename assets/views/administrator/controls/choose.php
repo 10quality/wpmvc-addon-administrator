@@ -23,9 +23,8 @@
                 value="<?php echo esc_attr( $val ) ?>"
                 style="display:none"
                 <?php if ( $value == $val ) : ?>checked="checked"<?php endif ?>
-                <?php echo $html_attributes ?>
             />
-            <div class="choose-option">
+            <div class="choose-option" <?php echo $html_attributes ?>>
                 <?php if ( $options['type'] === 'url' ) : ?>
                     <img src="<?php echo esc_url( $options['value'] ) ?>" alt="<?php echo esc_attr( $val ) ?>"/>
                 <?php elseif ( $options['type'] === 'dashicon' ) : ?>
