@@ -46,7 +46,7 @@ $class = array_merge( isset( $control ) && array_key_exists( 'wide', $control ) 
     </div>
 </script>
 <!-- placeholder -->
-<div id="media-<?php echo esc_attr( $id ) ?>" class="media">
+<div id="media-<?php echo esc_attr( $id ) ?>" class="wpmvc media">
     <?php if ( isset( $attachment ) && $attachment ) : ?>
         <div class="attachment">
             <img alt="<?php echo esc_attr( $attachment->alt ) ?>"

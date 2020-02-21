@@ -1,0 +1,18 @@
+/*!
+ * Media control styling.
+ * @author 10 Quality <info@10quality.com>
+ * @package wpmvc-addon-administrator
+ * @license MIT
+ * @version 1.0.0
+ */
+.media.wpmvc .attachment {
+    float: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 0 !important;
+    margin-top: 5px !important;
+}
+.media.wpmvc .name-value {
+    font-size: small;
+    color: #007cba;
+}

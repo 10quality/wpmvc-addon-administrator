@@ -40,6 +40,12 @@ class MediaControl extends Control
     public function enqueue()
     {
         wp_enqueue_media();
+        wp_enqueue_style(
+            'wpmvc-administrator-media',
+            addon_assets_url( 'css/media.css', __FILE__ ),
+            [],
+            '1.0.0'
+        );
         wp_enqueue_script(
             'wordpress-media-uploader',
             addon_assets_url( 'js/jquery.wp-media-uploader.min.js', __FILE__ ),
