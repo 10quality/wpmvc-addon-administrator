@@ -8,7 +8,7 @@
  * @license MIT
  * @version 1.0.0
  */
-$class = array_merge( isset( $wide ) && $wide ? ['widefat'] : [], isset( $class ) ? $class : [] );
+$class = array_merge( isset( $control ) && array_key_exists( 'wide', $control ) && $control['wide'] ? ['widefat'] : [], isset( $class ) ? $class : [] );
 ?>
 <input id="<?php echo esc_attr( $id ) ?>"
     type="<?php echo isset( $control ) && array_key_exists( 'type', $control ) ? esc_attr( $control['type'] ) : 'text' ?>"
