@@ -134,7 +134,10 @@ class AdminController extends Controller
                 && !call_user_func_array( $field['validate_callback'], [$model->$field_id, $model] )
             ) {
                 $response->error( $field_id, array_key_exists( 'validate_message', $field )
-                    ? $field['validate_message']
+                    ? sprintf(
+                        $field['validate_message'],
+                        array_key_exists( 'title', $field ) ? $field['title'] : $field_id
+                    )
                     : sprintf(
                         __( '<b>%s</b> is invalid.', 'wpmvc-addon-administrator' ),
                         array_key_exists( 'title', $field ) ? $field['title'] : $field_id
