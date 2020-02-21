@@ -163,6 +163,10 @@ class AdminController extends Controller
         do_action( 'administrator_enqueue_' . $model->id );
         // Render header
         AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );
+        // Notices
+        if ( $response !== null ) {
+            AdministratorAddon::view( $response->success ? 'administrator.responses.success' : 'administrator.responses.errors', ['response' => &$response] );
+        }
         // Tabs
         if ( $model->has_nav_tab() ) {
             AdministratorAddon::view( 'administrator.tab_nav', ['model' => &$model, 'tab' => $current_tab] );
