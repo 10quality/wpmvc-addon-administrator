@@ -168,8 +168,11 @@ class AdminController extends Controller
                 $fields[$field_id]['value'] = $field['default'];
             }
             $attributes = [];
-            if ( array_key_exists( 'attributes', $field ) ) {
-                foreach ( $field['attributes'] as $key => $value) {
+            if ( array_key_exists( 'control', $field )
+                && is_array( $field['control'] )
+                && array_key_exists( 'attributes', $field['control'] )
+            ) {
+                foreach ( $field['control']['attributes'] as $key => $value) {
                     $attributes[] = esc_attr( $key ) . '="'. esc_attr( $value )  .'"';
                 }
             }
