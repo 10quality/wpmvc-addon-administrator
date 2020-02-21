@@ -11,12 +11,19 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @license MIT
  * @version 1.0.0
  */
-class InputControl extends Control
+class CheckboxControl extends Control
 {
     /**
      * Control type.
      * @since 1.0.0
      * @var string
      */
-    const TYPE = 'input';
+    const TYPE = 'checkbox';
+    /**
+     * View key to use if render method is not present.
+     * View will be render as fallback.
+     * @since 1.0.0
+     * @var string
+     */
+    protected $view = 'administrator.controls.checkbox';
 }
