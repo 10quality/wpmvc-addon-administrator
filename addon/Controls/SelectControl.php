@@ -4,7 +4,7 @@ namespace WPMVC\Addons\Administrator\Controls;
 
 use WPMVC\Addons\Administrator\Abstracts\Control;
 /**
- * HTML <input> control.
+ * HTML <select> control.
  *
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
