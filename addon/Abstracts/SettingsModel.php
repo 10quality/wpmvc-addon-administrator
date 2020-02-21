@@ -84,6 +84,12 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      */
     protected $page_slug = null;
     /**
+     * Successful save message.
+     * @since 1.0.0
+     * @var string
+     */
+    protected $save_message = __( 'Settings saved!', 'wpmvc-addon-administrator' );
+    /**
      * Default constructor.
      * @since 1.0.0
      * 
@@ -94,7 +100,8 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
         // Forces adds settings field
         $this->aliases['_settings'] => 'field_settings';
         // Construct
-        parent::__construct( $id );
+        if ( ! empty( $id ) )
+            $this->load( $this->id );
     }
     /**
      * Getter function.
@@ -126,7 +133,7 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
     {
         if ( array_key_exists( $property, $this->_settings ) ) {
             $this->_settings[$property] = $value;
-        } elseif ( property_exists( $this, $property ) ) {
+        } elseif ( $property !== 'id' && property_exists( $this, $property ) ) {
             $this->$property = $value;
         }
         parent::__set( $property, $value );
@@ -145,15 +152,15 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
             $this->_settings = [];
         // Load tab settings and those stored @ options
         foreach ( $this->tabs as $tab ) {
-            foreach ( $tab['fields'] as $id => $field ) {
+            foreach ( $tab['fields'] as $field_id => $field ) {
                 if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
                     continue;
                 }
-                if ( !array_key_exists( $id, $this->_settings ) ) {
-                    $this->_settings[$id] = null;
+                if ( !array_key_exists( $field_id, $this->_settings ) ) {
+                    $this->_settings[$field_id] = null;
                 }
                 if ( is_array( $field ) && array_key_exists( 'storage', $field ) && $field['storage'] === 'option' ) {
-                    $this->_settings[$id] = get_option( $id, null );
+                    $this->_settings[$field_id] = get_option( $field_id, null );
                 }
             }
         }

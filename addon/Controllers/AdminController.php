@@ -3,8 +3,8 @@
 namespace WPMVC\Addons\Administrator\Controllers;
 
 use ReflectionClass;
-use WPMVC\MVC\Request;
-use WPMVC\MVC\Response;
+use WPMVC\Request;
+use WPMVC\Response;
 use WPMVC\MVC\Controller;
 use WPMVC\Addons\Administrator\AdministratorAddon;
 use WPMVC\Addons\Administrator\Abstracts\Control;
@@ -92,14 +92,56 @@ class AdminController extends Controller
             }, $this->tabs[$current_tab]['fields'] );
             $controls = $this->get_controls( $controls_in_use );
             // Model handling
-            $model->load();
-            $response = new Response;
+            $model->load( $model->id );
+            $response = null;
             if ( $_POST ) {
                 $response = $this->save( $model, $current_tab );
             }
             $this->render( $model->get_updated_instance(), $current_tab, $response, $controls );
         }
         return parent::__call( $method, $args );
+    }
+    /**
+     * Saves current tab data.
+     * @since 1.0.0
+     * 
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel &$model
+     * @param string                                              $current_tab
+     * 
+     * @return 
+     */
+    protected function save( SettingsModel &$model, $current_tab )
+    {
+        $response = new Response;
+        foreach ( $model->tabs[$current_tab] as $field_id => $field ) {
+            $value = Request::input(
+                $field_id,
+                array_key_exists( 'default', $field ) ? $field['default'] : null,
+                false,
+                array_key_exists( 'sanitize_callback', $field ) ? $field['sanitize_callback'] : true
+            );
+            if ( array_key_exists( 'validate_callback', $field )
+                && is_callable( $field['validate_callback'] )
+                && !call_user_func_array( $field['validate_callback'], [$value] )
+            ) {
+                $response->error( $field_id, array_key_exists( 'validate_message', $field )
+                    ? $field['validate_message']
+                    : sprintf(
+                        __( '<b>%s</b> is invalid.', 'wpmvc-addon-administrator' ),
+                        array_key_exists( 'title', $field ) ? $field['title'] : $field_id
+                    )
+                );
+            }
+            $model->$field_id = $value;
+        }
+        if ( $response->passes ) {
+            $model = apply_filters( 'administrator_settings_before_save_' . $model->id, $model, $current_tab, $controls );
+            $model->save();
+            do_action( 'administrator_settings_saved_' . $model->id, $model );
+            $response->success = true;
+            $response->message = $model->save_message;
+        }
+        return $response;
     }
     /**
      * Renders output.
@@ -110,7 +152,7 @@ class AdminController extends Controller
      * @param \WPMVC\Response                                     &$response   Save response.
      * @param array                                               &$controls   Controls in use.
      */
-    public function render( SettingsModel &$model, $current_tab, Response &$response, &$controls )
+    protected function render( SettingsModel &$model, $current_tab, Response &$response, &$controls )
     {
         // Enqueue
         $model->enqueue();
