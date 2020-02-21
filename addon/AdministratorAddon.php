@@ -71,7 +71,7 @@ class AdministratorAddon extends Addon
     {
         wp_register_style(
             'font-awesome',
-            addon_assets_url( 'css/font-awesome.min.css', __DIR__ ),
+            addon_assets_url( 'css/font-awesome.min.css', __FILE__ ),
             [],
             '4.7.0'
         );
