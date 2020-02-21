@@ -2,6 +2,7 @@
 
 namespace WPMVC\Addons\Administrator\Abstracts;
 
+use WPMVC\Addons\Administrator\AdministratorAddon;
 use WPMVC\Addons\Administrator\Contracts\Enqueueable;
 use WPMVC\Addons\Administrator\Contracts\Renderable;
 /**
@@ -28,6 +29,18 @@ abstract class Control implements Enqueueable, Renderable
      * @var string
      */
     protected $view = 'administrator.controls.input';
+    /**
+     * Getter function.
+     * @since 1.0.0
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function __get( $property )
+    {
+        return property_exists( $this, $property ) ? $this->$property : null;
+    }
     /**
      * Enqueues styles and scripts especific to the control.
      * @since 1.0.0

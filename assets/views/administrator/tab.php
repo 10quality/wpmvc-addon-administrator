@@ -45,8 +45,8 @@ $section_opened = false;
                     <?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?>
                 </th>
                 <td>
-                    <?php if ( array_key_exists( $field['_control_key'], $controls ) ) : ?>
-                        <?php $controls[$field['_control_key']]->render( $field ) ?>
+                    <?php if ( array_key_exists( $field['_control'], $controls ) ) : ?>
+                        <?php $controls[$field['_control']]->render( $field ) ?>
                     <?php endif ?>
                     <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
                         <br><p class="description"><?php echo $field['description'] ?></p>

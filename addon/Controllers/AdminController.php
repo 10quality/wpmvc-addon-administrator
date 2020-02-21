@@ -85,10 +85,10 @@ class AdminController extends Controller
             // Obtain all registered controls
             $controls_in_use = [];
             array_map( function( $field ) use( &$controls_in_use ) {
-                if ( array_key_exists( 'control' , $field )
-                    && ! in_array( is_array( $field['control'] ) ? $field['control']['type'] : $field['control'], $controls_in_use )
+                if ( ( ! array_key_exists( 'type' , $field ) && ! in_array( 'input', $controls_in_use ) )
+                    || ( array_key_exists( 'type' , $field ) && ! in_array( $field['type'], $controls_in_use ) )
                 ) {
-                    $controls_in_use[] = is_array( $field['control'] ) ? $field['control']['type'] : $field['control'];
+                    $controls_in_use[] = array_key_exists( 'type' , $field ) ? $field['type'] : 'input';
                 }
             }, $model->tabs[$current_tab]['fields'] );
             $controls = $this->get_controls( $controls_in_use );
@@ -163,7 +163,7 @@ class AdminController extends Controller
             }
             $fields[$field_id]['id'] = $field_id;
             $fields[$field_id]['value'] = $model->$field_id;
-            $fields[$field_id]['_control_key'] = array_key_exists( 'type', $field ) ? $field['type'] : 'input';
+            $fields[$field_id]['_control'] = array_key_exists( 'type', $field ) ? $field['type'] : 'input';
             if ( $fields[$field_id]['value'] === null && array_key_exists( 'default', $field ) ) {
                 $fields[$field_id]['value'] = $field['default'];
             }
@@ -173,7 +173,7 @@ class AdminController extends Controller
                     $attributes[] = esc_attr( $key ) . '="'. esc_attr( $value )  .'"';
                 }
             }
-            $field['html_attributes'] = implode( ' ', $attributes );
+            $fields[$field_id]['html_attributes'] = implode( ' ', $attributes );
         }
         // Enqueue
         $model->enqueue();
