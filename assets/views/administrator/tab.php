@@ -35,7 +35,9 @@ $section_opened = false;
             </div><!--.tab-section-->
             <?php $section_opened = false ?>
         <?php elseif ( $field['type'] === 'section_separator' ) : ?>
+            <?php if ( $section_opened ) : ?></table><?php endif ?>
             <hr id="<?php echo esc_attr( $field_id ) ?>"/>
+            <?php if ( $section_opened ) : ?><table class="form-table"><?php endif ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
             <?php $control = array_key_exists( 'control', $field ) && array_key_exists( 'type', $field['control'] ) ? $field['control']['type'] : 'input' ?>
@@ -45,5 +47,6 @@ $section_opened = false;
             <?php if ( !$section_opened ) : ?></table><?php endif ?>
         <?php endif ?>
     <?php endforeach ?>
+    <?php if ( $section_opened ) : ?></table><?php endif ?>
 </section>
 <?php do_action( 'administrator_content_bottom_' . $model->id . '_tab_' . $tab, $model ) ?>
