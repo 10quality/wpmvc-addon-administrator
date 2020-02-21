@@ -15,6 +15,7 @@ var gulp = require('gulp');
 gulp.task('vendorcss', function() {
     return gulp.src([
             './node_modules/font-awesome/css/font-awesome.min.css',
+            './node_modules/jquery-ui/themes/base/datepicker.css',
         ])
         .pipe(gulp.dest('./assets/css'));
 });
