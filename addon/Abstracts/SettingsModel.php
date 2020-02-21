@@ -199,7 +199,7 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
         // Save those stored @ options
         foreach ( $this->tabs as $tab ) {
             foreach ( $tab['fields'] as $id => $field ) {
-                if ( in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
+                if ( array_key_exists( 'type', $field ) && in_array( $field['type'], apply_filters( 'administrator_no_value_fields', [] ) ) ) {
                     continue;
                 }
                 if ( is_array( $field ) && array_key_exists( 'storage', $field ) && $field['storage'] === 'option' ) {

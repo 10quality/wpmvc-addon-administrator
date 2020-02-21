@@ -114,7 +114,7 @@ class AdminController extends Controller
     protected function save( SettingsModel &$model, $current_tab )
     {
         $response = new Response;
-        foreach ( $model->tabs[$current_tab] as $field_id => $field ) {
+        foreach ( $model->tabs[$current_tab]['fields'] as $field_id => $field ) {
             $value = Request::input(
                 $field_id,
                 array_key_exists( 'default', $field ) ? $field['default'] : null,
@@ -136,7 +136,7 @@ class AdminController extends Controller
             $model->$field_id = $value;
         }
         if ( $response->passes ) {
-            $model = apply_filters( 'administrator_settings_before_save_' . $model->id, $model, $current_tab, $controls );
+            $model = apply_filters( 'administrator_settings_before_save_' . $model->id, $model, $current_tab );
             $model->save();
             do_action( 'administrator_settings_saved_' . $model->id, $model );
             $response->success = true;
