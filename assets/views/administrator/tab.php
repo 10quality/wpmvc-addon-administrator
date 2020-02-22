@@ -12,7 +12,11 @@ $section_opened = false;
 ?>
 <?php do_action( 'administrator_content_top_' . $model->id . '_tab_' . $tab, $model ) ?>
 <section id="<?php echo esc_attr( $tab ) ?>" class="tab">
-    <?php if ( array_key_exists( 'title', $model->tabs[$tab] ) ) : ?>
+    <?php if ( array_key_exists( 'title', $model->tabs[$tab] )
+        && ( ! array_key_exists( 'show_title', $model->tabs[$tab] )
+            || $model->tabs[$tab]['show_title'] !== false
+        )
+    ) : ?>
         <h2><?php echo $model->tabs[$tab]['title'] ?></h2>
     <?php endif ?>
     <?php if ( array_key_exists( 'description', $model->tabs[$tab] ) ) : ?>
@@ -43,7 +47,7 @@ $section_opened = false;
             && array_key_exists( 'callback', $field )
             && is_callable( $field['callback'] )
         ) : ?>
-            <?php call_user_func_array( $field['callback'], [$field_id] ) ?>
+            <?php call_user_func_array( $field['callback'], [$model, $field_id] ) ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
             <tr id="tr-<?php echo esc_attr( $field_id ) ?>">
