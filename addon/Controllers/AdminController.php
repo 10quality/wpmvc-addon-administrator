@@ -84,7 +84,7 @@ class AdminController extends Controller
                 die;
             }
             // Filters
-            $model = apply_filters( 'administrator_model_' . $key, $model, $current_tab );
+            $model = apply_filters( 'administrator_preload_model_' . $key, $model, $current_tab );
             // Obtain all registered controls
             $controls_in_use = [];
             array_map( function( $field ) use( &$controls_in_use ) {
@@ -102,6 +102,7 @@ class AdminController extends Controller
                 $response = $this->save( $model, $current_tab );
             }
             $model = $model->get_updated_instance();
+            $model = apply_filters( 'administrator_model_' . $key, $model, $current_tab );
             $this->render( $model, $current_tab, $response, $controls );
         }
     }
@@ -189,6 +190,7 @@ class AdminController extends Controller
             }
             $fields[$field_id]['html_attributes'] = implode( ' ', $attributes );
         }
+        $fields = apply_filters( 'administrator_model_fields_' . $model->id, $fields, $model, $current_tab );
         // Enqueue
         $model->enqueue();
         foreach ( $controls as $key => $control ) {
