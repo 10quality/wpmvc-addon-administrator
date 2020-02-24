@@ -11,6 +11,7 @@ use WPMVC\Addons\Administrator\Controls\PagesControl;
 use WPMVC\Addons\Administrator\Controls\ChooseControl;
 use WPMVC\Addons\Administrator\Controls\DatepickerControl;
 use WPMVC\Addons\Administrator\Controls\MediaControl;
+use WPMVC\Addons\Administrator\Controls\TextareaControl;
 
 /**
  * Add-on configuration hooks.
@@ -18,7 +19,7 @@ use WPMVC\Addons\Administrator\Controls\MediaControl;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 class ConfigController extends Controller
 {
@@ -42,6 +43,7 @@ class ConfigController extends Controller
         $classes[ChooseControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\ChooseControl';
         $classes[DatepickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\DatepickerControl';
         $classes[MediaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\MediaControl';
+        $classes[TextareaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\TextareaControl';
         return $classes;
     }
 }
