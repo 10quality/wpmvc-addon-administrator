@@ -12,7 +12,7 @@ use WPMVC\Addon;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 class AdministratorAddon extends Addon
 {
@@ -46,6 +46,7 @@ class AdministratorAddon extends Addon
                 'checkbox',
             ];
         }, 1 );
+        add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 2 );
     }
     /**
      * Inits
@@ -66,6 +67,21 @@ class AdministratorAddon extends Addon
     public function register_controls()
     {
         return $this->mvc->action( 'ConfigController@controls', [] );
+    }
+    /**
+     * Returns control's <tr> attributes.
+     * @since 1.0.1
+     * 
+     * @hook administrator_control_tr
+     * 
+     * @param array $attributes
+     * @param array $field
+     * 
+     * @return array|string
+     */
+    public function control_tr( $attributes, $field )
+    {
+        return $this->mvc->action( 'AdminController@control_tr', $attributes, $field );
     }
     /**
      * Registers/enqueues general admin assets.

@@ -6,7 +6,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 $section_opened = false;
 ?>
@@ -50,7 +50,7 @@ $section_opened = false;
             <?php call_user_func_array( $field['callback'], [$model, $field_id] ) ?>
         <?php else : ?>
             <?php if ( !$section_opened ) : ?><table class="form-table"><?php endif ?>
-            <tr id="tr-<?php echo esc_attr( $field_id ) ?>">
+            <tr id="tr-<?php echo esc_attr( $field_id ) ?>" <?php echo apply_filters( 'administrator_control_tr', [], $field, $model ) ?>>
                 <th>
                     <?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?>
                 </th>

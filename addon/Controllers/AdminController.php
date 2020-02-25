@@ -16,7 +16,7 @@ use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 class AdminController extends Controller
 {
@@ -218,6 +218,33 @@ class AdminController extends Controller
         }
         // Render footer
         AdministratorAddon::view( 'administrator.footer', ['model' => &$model, 'tab' => $current_tab] );
+    }
+    /**
+     * Returns control's <tr> attributes.
+     * @since 1.0.1
+     * 
+     * @hook administrator_control_tr
+     * 
+     * @param array $attributes
+     * @param array $field
+     * 
+     * @return array|string
+     */
+    public function control_tr( $attributes, $field )
+    {
+        if ( ! is_array( $attributes ) ) return '';
+        if ( array_key_exists( 'control' , $field )
+            && is_array( $field['control'] )
+            && array_key_exists( 'type' , $field['control'] )
+            && $field['control']['type'] === 'hidden'
+        ) {
+            $attributes['class'] = 'hidden';
+            $attributes['style'] = 'display:none';
+        }
+        foreach ( $attributes as $key => $value ) {
+            $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
+        }
+        return implode( ' ', $attributes );
     }
     /**
      * Returns array collection with setting models available.
