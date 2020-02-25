@@ -12,6 +12,7 @@ use WPMVC\Addons\Administrator\Controls\ChooseControl;
 use WPMVC\Addons\Administrator\Controls\DatepickerControl;
 use WPMVC\Addons\Administrator\Controls\MediaControl;
 use WPMVC\Addons\Administrator\Controls\TextareaControl;
+use WPMVC\Addons\Administrator\Controls\EditorControl;
 
 /**
  * Add-on configuration hooks.
@@ -44,6 +45,7 @@ class ConfigController extends Controller
         $classes[DatepickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\DatepickerControl';
         $classes[MediaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\MediaControl';
         $classes[TextareaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\TextareaControl';
+        $classes[EditorControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\EditorControl';
         return $classes;
     }
 }
