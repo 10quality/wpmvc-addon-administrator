@@ -240,6 +240,7 @@ class AdminController extends Controller
         AdministratorAddon::view( 'administrator.footer', ['model' => &$model, 'tab' => $current_tab] );
         AdministratorAddon::view( 'administrator.repeater-field-actions' );
         AdministratorAddon::view( 'administrator.repeater-index-editor' );
+        AdministratorAddon::view( 'administrator.repeater-index-tag' );
         foreach ( $controls as $key => $control ) {
             $control->footer();
         }

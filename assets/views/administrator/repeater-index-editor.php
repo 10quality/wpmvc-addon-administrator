@@ -1,6 +1,6 @@
 <?php
 /**
- * Repeater field actions.
+ * Repeater index editor.
  * WordPress MVC view.
  * 
  * @author 10 Quality <info@10quality.com>

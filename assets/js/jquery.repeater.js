@@ -30,6 +30,7 @@
                     self.$button.on( 'click', self.methods.on_add );
                     self.key = self.$items.find( '*[data-repeater-field="1"]' ).length;
                     self.methods.init_actions();
+                    self.methods.update_index_tags();
                 }
                 self.$el.on( 'click', '*[role="repeater-remove"]', self.methods.on_remove );
                 self.$el.on( 'click', '*[role="repeater-edit-index"]', self.methods.on_index_edit );
@@ -99,8 +100,7 @@
                     }
                 } );
             },
-            update_evens_odds: function()
-            {
+            update_evens_odds: function() {
                 var keys = [];
                 self.$items.find( '*[data-repeater-field="1"]' ).each( function() {
                     var key = $( this ).data( 'repeater-key' );
@@ -147,6 +147,24 @@
                     $( this ).find( '*[name]' ).attr( 'name', name );
                 } );
                 self.$index_editor.hide();
+                self.methods.update_index_tags();
+            },
+            update_index_tags: function() {
+                self.$items.find( '*[data-repeater-field="1"]' ).each( function() {
+                    // Remove any existing tag
+                    $( this ).find( '.index-tag' ).remove();
+                    var index = $( this ).find( '*[name]' )
+                        .attr( 'name' )
+                        .replace( /^[a-zA-Z0-9\-\_]+\[|\]/g, '' )
+                        .trim();
+                    if ( index && index !== '' ) {
+                        var $template = $( $( document ).find( '#repeater-index-tag' ).html() );
+                        $template.find( '*[role="index-value"]' ).text( index );
+                        $( this ).find( '*[name]' )
+                            .closest( 'td' )
+                            .append( $WebGL.template );
+                    }
+                } );
             },
         };
         self.methods.ready();
