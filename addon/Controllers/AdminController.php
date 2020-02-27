@@ -272,6 +272,9 @@ class AdminController extends Controller
         if ( $helper->is_repeater_field ) {
             $attributes['data-repeater-field'] = 1;
         }
+        if ( array_key_exists( 'repeater_key' , $field ) ) {
+            $attributes['data-repeater-key'] = $field['repeater_key'];
+        }
         foreach ( $attributes as $key => $value ) {
             $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
         }

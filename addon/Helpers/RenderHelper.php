@@ -130,6 +130,7 @@ class RenderHelper
                 $field['value'] = $field['value'][$key];
                 $field['id'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. ( is_numeric( $key ) ? '' : $key ) .']';
                 $field['name'] = $field['id'];
+                $field['repeater_key'] = $key;
                 AdministratorAddon::view( 'administrator.repeater-field', [
                     'repeater_id' => &$this->repeater_id,
                     'model' => &$model,
