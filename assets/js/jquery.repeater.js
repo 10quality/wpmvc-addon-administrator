@@ -18,7 +18,7 @@
         self.$items = undefined;
         self.$button = undefined;
         self.$template = undefined;
-        self.$template_actions = undefined;
+        self.$index_editor = undefined;
         self.key = undefined;
         self.methods = {
             ready: function() {
@@ -30,7 +30,8 @@
                     self.key = self.$items.find( '*[data-repeater-field="1"]' ).length;
                     self.methods.init_actions();
                 }
-                self.$el.on( 'click', '*[role="repeater-remove"]', self.methods.on_remove )
+                self.$el.on( 'click', '*[role="repeater-remove"]', self.methods.on_remove );
+                self.$el.on( 'click', '*[role="repeater-edit-index"]', self.methods.on_index_edit );
             },
             on_add: function( event ) {
                 if ( event !== undefined )
@@ -84,6 +85,11 @@
                         );
                     }
                 } );
+                // Index editor
+                var $template = $( $( document ).find( '#repeater-index-editor' ).html() );
+                $template.attr( 'id', 'index-editor' ).css( 'display', 'none' );
+                $( 'body' ).append( $template );
+                self.$index_editor = $( '#index-editor' );
             },
             update_evens_odds: function()
             {
@@ -101,7 +107,14 @@
                     self.$items.find( '*[data-repeater-key="' + keys[i] + '"]' ).removeClass( is_odd ? 'repeater-even' : 'repeater-odd' );
                     self.$items.find( '*[data-repeater-key="' + keys[i] + '"]' ).addClass( is_odd ? 'repeater-odd' : 'repeater-even' );
                 }
-            }
+            },
+            on_index_edit: function( event ) {
+                if ( event !== undefined )
+                    event.preventDefault();
+                var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
+                self.$index_editor.find( 'input' ).val( key );
+                self.$index_editor.show();
+            },
         };
         self.methods.ready();
     };
