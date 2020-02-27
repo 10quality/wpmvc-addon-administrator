@@ -198,6 +198,12 @@ class AdminController extends Controller
             $control->enqueue();
         }
         wp_enqueue_style( 'font-awesome' );
+        wp_enqueue_style(
+            'wpmvc-administrator-repeater',
+            addon_assets_url( 'css/repeater.css', __FILE__ ),
+            [],
+            '1.0.1'
+        );
         do_action( 'administrator_enqueue_' . $model->id );
         // Render header
         AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );

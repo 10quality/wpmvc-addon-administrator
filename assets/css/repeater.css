@@ -1,0 +1,21 @@
+/*!
+ * Repeater styling.
+ * @author 10 Quality <info@10quality.com>
+ * @package wpmvc-addon-administrator
+ * @license MIT
+ * @version 1.0.0
+ */
+*[role=repeater] {
+    margin-top: .5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+*[role=repeater] h3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+*[role=repeater] h3 button[role="action-repeate"] {
+    margin-left: 10px;
+}

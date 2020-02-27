@@ -32,7 +32,27 @@
                 <?php if ( $field['type'] === 'repeater_open' ) : ?>role="repeater"<?php endif ?>
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
-                    <h3><?php echo $field['title'] ?></h3>
+                    <h3><?php echo $field['title'] ?><?php if ($field['type'] === 'repeater_open' ) : ?>
+                        <button type="button" class="repeater-add button" role="action-repeate">
+                            <?php if ( ! array_key_exists( 'repeate_icon', $field ) || $field['repeate_icon'] !== false ) : ?>
+                                <i class="fa <?php echo esc_attr( array_key_exists( 'repeate_icon', $field ) ? $field['repeate_icon'] : 'fa-plus-circle' ) ?>"
+                                    aria-hidden="true"
+                                    ></i>
+                            <?php endif ?>
+                            <?php echo array_key_exists( 'repeate_label', $field ) ? $label['repeate_label'] : __( 'Add' ) ?>
+                        </button>
+                    <?php endif ?></h3>
+                <?php elseif ( $field['type'] === 'repeater_open' ) : ?>
+                    <h3><!--Repeater:<?php echo esc_attr( $field_id ) ?>-->
+                        <button type="button" class="repeater-add button" role="action-repeate">
+                            <?php if ( ! array_key_exists( 'repeate_icon', $field ) || $field['repeate_icon'] !== false ) : ?>
+                                <i class="fa <?php echo esc_attr( array_key_exists( 'repeate_icon', $field ) ? $field['repeate_icon'] : 'fa-plus-circle' ) ?>"
+                                    aria-hidden="true"
+                                    ></i>
+                            <?php endif ?>
+                            <?php echo array_key_exists( 'repeate_label', $field ) ? $label['repeate_label'] : __( 'Add' ) ?>
+                        </button>
+                    </h3>
                 <?php endif ?>
                 <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
                     <p class="description"><?php echo $field['description'] ?></p>
