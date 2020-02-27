@@ -98,7 +98,9 @@ class RenderHelper
      */
     public function render_repeater( SettingsModel &$model, &$controls )
     {
-        if ( count( $this->repeater_fields === 0 ) ) return;
+        if ( ! is_array( $this->repeater_fields ) &&
+            count( $this->repeater_fields ) === 0
+        ) return;
         // Get item keys
         $keys = [];
         foreach ( $this->repeater_fields as $field ) {
