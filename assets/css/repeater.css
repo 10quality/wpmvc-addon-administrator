@@ -37,10 +37,15 @@
 *[role=repeater] td[role="repeater-actions"] button {
     color: #777;
     border: none;
-    outline: none;
     padding: 1px 5px !important;
     background: transparent !important;
     cursor: pointer !important;
+}
+*[role=repeater] td[role="repeater-actions"] button:active {
+    outline: none;
+}
+*[role=repeater] td[role="repeater-actions"] button:focus {
+    outline: 1.5px solid #007cba;
 }
 *[role=repeater] td[role="repeater-actions"] button[role="repeater-remove"]:hover {
     color: #F44336;
