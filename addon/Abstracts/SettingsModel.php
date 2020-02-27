@@ -18,16 +18,10 @@ use WPMVC\Addons\Administrator\Contracts\Manageable;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Manageable
 {
-    /**
-     * Settings model instance.
-     * @since 1.0.0
-     * @var \WPMVC\Addons\Administrator\Abstracts\SettingsModel
-     */
-    protected static $instance;
     /**
      * Tab ID that indicates to the rendering process
      * not to use tabs, as all fields will be displayed in one page.
