@@ -143,7 +143,7 @@
                 self.$items.find( '*[data-repeater-key="' + key + '"]' ).each( function() {
                     var name = $( this ).find( '*[name]' )
                         .attr( 'name' )
-                        .replace( /\[(|[\s\S]+)\]/g, '' ) + '[' + self.$index_editor.find( 'input' ).val() + ']';
+                        .replace( /\[(|[\s\S]+)\]/g, '' ) + '[' + self.methods.slugify( self.$index_editor.find( 'input' ).val() ) + ']';
                     $( this ).find( '*[name]' ).attr( 'name', name );
                 } );
                 self.$index_editor.hide();
@@ -166,6 +166,14 @@
                     }
                 } );
             },
+            slugify: function( value ) {
+                return value.toString().toLowerCase().trim()
+                    .replace(/\s+/g, '-')           // Replace spaces with -
+                    .replace(/&/g, '-and-')         // Replace & with 'and'
+                    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                    .replace(/\-\-+/g, '-')
+                    .replace(/\-/g, '_');
+            }
         };
         self.methods.ready();
     };
