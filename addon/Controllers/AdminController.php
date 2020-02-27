@@ -9,6 +9,7 @@ use WPMVC\MVC\Controller;
 use WPMVC\Addons\Administrator\AdministratorAddon;
 use WPMVC\Addons\Administrator\Abstracts\Control;
 use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
+use WPMVC\Addons\Administrator\Helpers\RenderHelper;
 
 /**
  * Admin settings hooks.
@@ -212,7 +213,13 @@ class AdminController extends Controller
         if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
             AdministratorAddon::view( 'administrator.form-wrapper-open', ['model' => &$model, 'tab' => $current_tab] );
         }
-        AdministratorAddon::view( 'administrator.tab', ['model' => &$model, 'tab' => $current_tab, 'controls' => &$controls, 'fields' => &$fields] );
+        AdministratorAddon::view( 'administrator.tab', [
+            'model' => &$model,
+            'tab' => $current_tab,
+            'controls' => &$controls,
+            'fields' => &$fields,
+            'helper' => new RenderHelper,
+        ] );
         if ( !array_key_exists( 'submit', $model->tabs[$current_tab] ) || $model->tabs[$current_tab]['submit'] === true ) {
             AdministratorAddon::view( 'administrator.form-wrapper-close', ['model' => &$model, 'tab' => $current_tab] );
         }
@@ -225,14 +232,19 @@ class AdminController extends Controller
      * 
      * @hook administrator_control_tr
      * 
-     * @param array $attributes
-     * @param array $field
+     * @param array                                               $attributes
+     * @param array                                               $field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     * @param \WPMVC\Addons\Administrator\Helpers\RenderHelper    $helper
      * 
      * @return array|string
      */
-    public function control_tr( $attributes, $field )
+    public function control_tr( $attributes, $field, SettingsModel $model, RenderHelper $helper )
     {
         if ( ! is_array( $attributes ) ) return '';
+        if ( $helper->is_repeater_opened ) {
+            $attributes['data-field-id'] = $field['id'];
+        }
         if ( array_key_exists( 'control' , $field )
             && is_array( $field['control'] )
             && array_key_exists( 'type' , $field['control'] )

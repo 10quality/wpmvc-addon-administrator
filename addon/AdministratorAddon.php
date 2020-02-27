@@ -39,6 +39,8 @@ class AdministratorAddon extends Addon
                 'section_close',
                 'section_separator',
                 'callback',
+                'repeater_open',
+                'repeater_close',
             ];
         }, 1 );
         add_filter( 'administrator_bool_fields', function() {
@@ -46,7 +48,7 @@ class AdministratorAddon extends Addon
                 'checkbox',
             ];
         }, 1 );
-        add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 2 );
+        add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 4 );
     }
     /**
      * Inits
