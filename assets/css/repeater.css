@@ -16,6 +16,6 @@
     flex-direction: row;
     align-items: center;
 }
-*[role=repeater] h3 button[role="action-repeate"] {
+*[role=repeater] h3 button[role="repeater-add"] {
     margin-left: 10px;
 }

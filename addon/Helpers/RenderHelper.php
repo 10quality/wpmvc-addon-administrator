@@ -119,6 +119,7 @@ class RenderHelper
                     'controls' => &$controls,
                     'field_id' => &$field_id,
                     'field' => &$field,
+                    'helper' => &$this,
                 ] );
             }
         }
