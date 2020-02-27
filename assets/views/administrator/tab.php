@@ -33,7 +33,7 @@
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
                     <h3><?php echo $field['title'] ?><?php if ($field['type'] === 'repeater_open' ) : ?>
-                        <button type="button" class="repeater-add button" role="action-repeate">
+                        <button type="button" class="repeater-add button" role="repeater-add">
                             <?php if ( ! array_key_exists( 'repeate_icon', $field ) || $field['repeate_icon'] !== false ) : ?>
                                 <i class="fa <?php echo esc_attr( array_key_exists( 'repeate_icon', $field ) ? $field['repeate_icon'] : 'fa-plus-circle' ) ?>"
                                     aria-hidden="true"
@@ -57,7 +57,7 @@
                 <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
                     <p class="description"><?php echo $field['description'] ?></p>
                 <?php endif ?>
-                <table class="form-table">
+                <table class="form-table"<?php if ($field['type'] === 'repeater_open' ) : ?> role="repeater-items"<?php endif ?>>
                     <?php if ( $field['type'] === 'repeater_open' ) : ?>
                         <?php $helper->open_repeater( $field_id ) ?><script id="template-<?php echo esc_attr( $field_id ) ?>" type="text/template">
                     <?php endif ?>

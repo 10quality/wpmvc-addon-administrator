@@ -204,6 +204,13 @@ class AdminController extends Controller
             [],
             '1.0.1'
         );
+        wp_enqueue_script(
+            'wpmvc-administrator-repeater',
+            addon_assets_url( 'js/jquery.repeater.js', __FILE__ ),
+            ['jquery'],
+            '1.0.1',
+            true
+        );
         do_action( 'administrator_enqueue_' . $model->id );
         // Render header
         AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );
