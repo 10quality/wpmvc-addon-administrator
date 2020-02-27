@@ -18,25 +18,47 @@
         self.$items = undefined;
         self.$button = undefined;
         self.$template = undefined;
+        self.$template_actions = undefined;
+        self.key = undefined;
         self.methods = {
             ready: function() {
                 self.$template = self.$el.find( 'script[type="text/template"]' );
                 self.$items = self.$el.find( '*[role="repeater-items"]' );
                 self.$button = self.$el.find( '*[role="repeater-add"]' );
-                if ( self.$button.length && self.$template.length && self.$items.length )
+                if ( self.$button.length && self.$template.length && self.$items.length ) {
                     self.$button.on( 'click', self.methods.on_add );
+                    self.key = self.$items.find( '*[data-repeater-field="1"]' ).length;
+                }
             },
             on_add: function( event ) {
                 if ( event !== undefined )
                     event.preventDefault();
-                var $item = $( self.$template.html() );
-                $item.find('*').each( function() {
+                var $last_item = self.$items.find( '*[data-repeater-field="1"]:last-child' );
+                var is_odd = $last_item.length === 0 || $last_item.hasClass( 'repeater-even' );
+                var $item = $('<div></div>');
+                $item.html( self.$template.html() );
+                $item.find( '*' ).each( function() {
                     if ( $( this ).attr( 'name' ) !== undefined ) {
                         var name = $( this ).attr( 'name' );
                         $( this ).attr( 'name', name + '[]' );
                     }
                 } );
-                self.$items.append( $item );
+                var aux = 0;
+                $item.find( '*[data-repeater="1"]' ).each( function() {
+                    if ( aux === 0 ) {
+                        // Add actions
+                        $( this ).find( '*role="repeater-actions"' ).html(
+                            $( document ).find( '#repeater-actions' ).html();
+                        );
+                    }
+                    $( this ).removeClass( !is_odd ? 'repeater-odd' : 'repeater-even' );
+                    $( this ).addClass( is_odd ? 'repeater-odd' : 'repeater-even' );
+                    $( this ).attr( 'data-repeater-field', 1 );
+                    $( this ).attr( 'data-repeater-key', self.key );
+                    aux++;
+                } );
+                self.$items.append( $item.html() );
+                self.key++;
             },
         };
         self.methods.ready();

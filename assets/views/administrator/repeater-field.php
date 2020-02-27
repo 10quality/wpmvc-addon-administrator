@@ -21,4 +21,5 @@
             <br><p class="description"><?php echo $field['description'] ?></p>
         <?php endif ?>
     </td>
+    <td role="repeater-actions"></td>
 </tr>

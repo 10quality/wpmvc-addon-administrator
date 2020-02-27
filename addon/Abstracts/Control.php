@@ -58,4 +58,12 @@ abstract class Control implements Enqueueable, Renderable
     {
         AdministratorAddon::view( $this->view, $args );
     }
+    /**
+     * Renders additional HTML code at the footer/end of the form.
+     * @since 1.0.0
+     */
+    public function footer()
+    {
+        // TODO: Based on control.
+    }
 }

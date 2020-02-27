@@ -238,6 +238,10 @@ class AdminController extends Controller
         }
         // Render footer
         AdministratorAddon::view( 'administrator.footer', ['model' => &$model, 'tab' => $current_tab] );
+        AdministratorAddon::view( 'administrator.repeater-field-actions' );
+        foreach ( $controls as $key => $control ) {
+            $control->footer();
+        }
     }
     /**
      * Returns control's <tr> attributes.
@@ -264,7 +268,7 @@ class AdminController extends Controller
             $attributes['style'] = 'display:none';
         }
         if ( $helper->is_repeater_opened ) {
-            $attributes['data-field-id'] = $field['id'];
+            $attributes['data-repeater'] = 1;
             if ( ! array_key_exists( 'class', $attributes ) )
                 $attributes['class'] = '';
             $attributes['class'] .= trim( ' ' . ( $helper->is_repeater_odd ? 'repeater-odd' : 'repeater-even' ) );
