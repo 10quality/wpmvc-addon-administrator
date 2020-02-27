@@ -65,7 +65,7 @@
                 if ( event !== undefined )
                     event.preventDefault();
                 var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
-                if ( key && confirm( self.$el.data( 'remove-label' ) ) )
+                if ( key && confirm( self.$el.data( 'remove-message' ) ) )
                     self.$items.find( '*[data-repeater-key="' + key + '"]' ).remove();
             },
         };

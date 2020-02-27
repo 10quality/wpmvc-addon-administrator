@@ -31,7 +31,7 @@
                 class="tab-section fieldset"
                 <?php if ( $field['type'] === 'repeater_open' ) : ?>
                     role="repeater"
-                    data-remove-label="<?php echo esc_attr( array_key_exists( 'remove_label', $field ) ? $field['remove_label'] : __( 'Remove item?', 'wpmvc-addon-administrator' ) ) ?>"
+                    data-remove-message="<?php echo esc_attr( array_key_exists( 'remove_message', $field ) ? $field['remove_message'] : __( 'Remove item?', 'wpmvc-addon-administrator' ) ) ?>"
                 <?php endif ?>
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
