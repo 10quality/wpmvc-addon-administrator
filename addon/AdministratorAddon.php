@@ -81,9 +81,9 @@ class AdministratorAddon extends Addon
      * 
      * @return array|string
      */
-    public function control_tr( $attributes, $field )
+    public function control_tr( $attributes, $field, $model, $helper )
     {
-        return $this->mvc->action( 'AdminController@control_tr', $attributes, $field );
+        return $this->mvc->action( 'AdminController@control_tr', $attributes, $field, $model, $helper );
     }
     /**
      * Registers/enqueues general admin assets.
