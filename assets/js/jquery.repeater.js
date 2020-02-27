@@ -19,6 +19,7 @@
         self.$button = undefined;
         self.$template = undefined;
         self.$index_editor = undefined;
+        self.$edited_field = undefined;
         self.key = undefined;
         self.methods = {
             ready: function() {
@@ -90,6 +91,13 @@
                 $template.attr( 'id', 'index-editor' ).css( 'display', 'none' );
                 $( 'body' ).append( $template );
                 self.$index_editor = $( '#index-editor' );
+                self.$index_editor.find( '*[role="index-cancel"]' ).on( 'click', self.methods.on_index_cancel );
+                self.$index_editor.find( '*[role="index-update"]' ).on( 'click', self.methods.on_index_update );
+                self.$index_editor.find( 'input' ).on( 'keypress', function( event ) {
+                    if ( event.which === 13 ) {
+                        return self.methods.on_index_update();
+                    }
+                } );
             },
             update_evens_odds: function()
             {
@@ -111,9 +119,34 @@
             on_index_edit: function( event ) {
                 if ( event !== undefined )
                     event.preventDefault();
-                var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
-                self.$index_editor.find( 'input' ).val( key );
+                self.$edited_field = $( this );
+                var index = self.$edited_field.closest( '*[data-repeater-field="1"]' )
+                    .find( '*[name]' )
+                    .attr( 'name' )
+                    .replace( /^[a-zA-Z0-9\-\_]+\[|\]/g, '' );
+                self.$index_editor.find( 'input' ).val( index );
+                self.$index_editor.css({
+                    top: self.$edited_field.offset().top - 5,
+                    left: self.$edited_field.offset().left - self.$index_editor.width() - 12,
+                });
                 self.$index_editor.show();
+            },
+            on_index_cancel: function( event ) {
+                if ( event !== undefined )
+                    event.preventDefault();
+                self.$index_editor.hide();
+            },
+            on_index_update: function( event ) {
+                if ( event !== undefined )
+                    event.preventDefault();
+                var key = self.$edited_field.closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
+                self.$items.find( '*[data-repeater-key="' + key + '"]' ).each( function() {
+                    var name = $( this ).find( '*[name]' )
+                        .attr( 'name' )
+                        .replace( /\[(|[\s\S]+)\]/g, '' ) + '[' + self.$index_editor.find( 'input' ).val() + ']';
+                    $( this ).find( '*[name]' ).attr( 'name', name );
+                } );
+                self.$index_editor.hide();
             },
         };
         self.methods.ready();
