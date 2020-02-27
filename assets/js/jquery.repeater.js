@@ -130,6 +130,7 @@
                     left: self.$edited_field.offset().left - self.$index_editor.width() - 12,
                 });
                 self.$index_editor.show();
+                self.$index_editor.find( 'input' ).focus();
             },
             on_index_cancel: function( event ) {
                 if ( event !== undefined )
