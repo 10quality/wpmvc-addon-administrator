@@ -39,7 +39,7 @@
                                     aria-hidden="true"
                                     ></i>
                             <?php endif ?>
-                            <?php echo array_key_exists( 'repeate_label', $field ) ? $label['repeate_label'] : __( 'Add' ) ?>
+                            <?php echo array_key_exists( 'repeate_label', $field ) ? $field['repeate_label'] : __( 'Add' ) ?>
                         </button>
                     <?php endif ?></h3>
                 <?php elseif ( $field['type'] === 'repeater_open' ) : ?>
@@ -50,7 +50,7 @@
                                     aria-hidden="true"
                                     ></i>
                             <?php endif ?>
-                            <?php echo array_key_exists( 'repeate_label', $field ) ? $label['repeate_label'] : __( 'Add' ) ?>
+                            <?php echo array_key_exists( 'repeate_label', $field ) ? $field['repeate_label'] : __( 'Add' ) ?>
                         </button>
                     </h3>
                 <?php endif ?>
