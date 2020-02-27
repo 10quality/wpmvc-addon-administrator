@@ -19,3 +19,9 @@
 *[role=repeater] h3 button[role="repeater-add"] {
     margin-left: 10px;
 }
+*[role=repeater] .repeater-odd {
+    background-color: #eaeaea;
+}
+*[role=repeater] .repeater-even {
+    background-color: #f0f4f5;
+}

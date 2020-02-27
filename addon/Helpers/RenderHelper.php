@@ -32,16 +32,23 @@ class RenderHelper
      * Flag that indicates if there is a section opened.
      * @since 1.0.1
      * 
-     * @var array
+     * @var bool
      */
     public $is_section_opened = false;
     /**
      * Flag that indicates if there is a repeater opened.
      * @since 1.0.1
      * 
-     * @var array
+     * @var bool
      */
     public $is_repeater_opened = false;
+    /**
+     * Flag that if repeater item is even or odd.
+     * @since 1.0.1
+     * 
+     * @var bool
+     */
+    public $is_repeater_odd = true;
     /**
      * Opens a section logically.
      * @since 1.0.1
@@ -58,6 +65,7 @@ class RenderHelper
     {
         $this->repeater_id = $id;
         $this->is_repeater_opened = true;
+        $this->is_repeater_odd = true;
         $this->repeater_fields = [];
     }
     /**
@@ -86,8 +94,9 @@ class RenderHelper
      */
     public function add_repeater_field( $field_id, $field )
     {
-        if ( $this->is_repeater_opened )
+        if ( $this->is_repeater_opened ) {
             $this->repeater_fields[$field_id] = $field;
+        }
     }
     /**
      * Renders repeater fields.
@@ -122,6 +131,7 @@ class RenderHelper
                     'helper' => &$this,
                 ] );
             }
+            $this->is_repeater_odd = ! $this->is_repeater_odd;
         }
     }
 }

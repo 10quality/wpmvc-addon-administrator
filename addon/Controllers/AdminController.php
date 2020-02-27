@@ -255,9 +255,6 @@ class AdminController extends Controller
     public function control_tr( $attributes, $field, SettingsModel $model, RenderHelper $helper )
     {
         if ( ! is_array( $attributes ) ) return '';
-        if ( $helper->is_repeater_opened ) {
-            $attributes['data-field-id'] = $field['id'];
-        }
         if ( array_key_exists( 'control' , $field )
             && is_array( $field['control'] )
             && array_key_exists( 'type' , $field['control'] )
@@ -265,6 +262,12 @@ class AdminController extends Controller
         ) {
             $attributes['class'] = 'hidden';
             $attributes['style'] = 'display:none';
+        }
+        if ( $helper->is_repeater_opened ) {
+            $attributes['data-field-id'] = $field['id'];
+            if ( ! array_key_exists( 'class', $attributes ) )
+                $attributes['class'] = '';
+            $attributes['class'] .= trim( ' ' . ( $helper->is_repeater_odd ? 'repeater-odd' : 'repeater-even' ) );
         }
         foreach ( $attributes as $key => $value ) {
             $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
