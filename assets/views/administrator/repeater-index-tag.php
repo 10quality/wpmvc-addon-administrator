@@ -12,6 +12,6 @@
 <script id="repeater-index-tag" type="text/template">
     <div class="index-tag">
         <span class="index-label"><?php _e( 'Index', 'wpmvc-addon-administrator' ) ?></span>
-        <span class="index-label" role="index-value"></span>
+        <span class="index-value" role="index-value"></span>
     </div>
 </script>

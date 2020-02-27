@@ -162,7 +162,7 @@
                         $template.find( '*[role="index-value"]' ).text( index );
                         $( this ).find( '*[name]' )
                             .closest( 'td' )
-                            .append( $WebGL.template );
+                            .append( $template );
                     }
                 } );
             },

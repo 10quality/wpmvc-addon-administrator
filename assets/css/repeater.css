@@ -59,6 +59,26 @@
 *[role=repeater] td[role="repeater-actions"] button[role="repeater-edit-index"]:active {
     color: #01547d;
 }
+*[role=repeater] td {
+    position: relative;
+}
+*[role=repeater] .index-tag {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    background-color: #7e8993;
+    font-size: 11px;
+    color: #ddd;
+    padding: 1px 5px;
+}
+*[role=repeater] .index-tag .index-label {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+*[role=repeater] .index-tag .index-value {
+    color: #fff;
+    font-weight: 600;
+}
 .index-editor {
     position: absolute;
     background-color: #333;
