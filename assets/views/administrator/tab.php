@@ -29,7 +29,10 @@
             <?php $helper->open_section() ?>
             <div id="<?php echo esc_attr( $field_id ) ?>"
                 class="tab-section fieldset"
-                <?php if ( $field['type'] === 'repeater_open' ) : ?>role="repeater"<?php endif ?>
+                <?php if ( $field['type'] === 'repeater_open' ) : ?>
+                    role="repeater"
+                    data-remove-label="<?php echo esc_attr( array_key_exists( 'remove_label', $field ) ? $field['remove_label'] : __( 'Remove item?', 'wpmvc-addon-administrator' ) ) ?>"
+                <?php endif ?>
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
                     <h3><?php echo $field['title'] ?><?php if ($field['type'] === 'repeater_open' ) : ?>
@@ -96,7 +99,7 @@
                     <?php if ( array_key_exists( 'description', $field ) && !empty( $field['description'] ) ) : ?>
                         <br><p class="description"><?php echo $field['description'] ?></p>
                     <?php endif ?>
-                </td>
+                </td><?php if ( $helper->is_repeater_opened ) : ?><td role="repeater-actions"></td><?php endif ?>
             </tr>
             <?php if ( !$helper->is_section_opened ) : ?></table><?php endif ?>
         <?php endif ?>

@@ -29,6 +29,7 @@
                     self.$button.on( 'click', self.methods.on_add );
                     self.key = self.$items.find( '*[data-repeater-field="1"]' ).length;
                 }
+                self.$el.on( 'click', '*[role="repeater-remove"]', self.methods.on_remove )
             },
             on_add: function( event ) {
                 if ( event !== undefined )
@@ -47,8 +48,8 @@
                 $item.find( '*[data-repeater="1"]' ).each( function() {
                     if ( aux === 0 ) {
                         // Add actions
-                        $( this ).find( '*role="repeater-actions"' ).html(
-                            $( document ).find( '#repeater-actions' ).html();
+                        $( this ).find( '*[role="repeater-actions"]' ).html(
+                            $( document ).find( '#repeater-actions' ).html()
                         );
                     }
                     $( this ).removeClass( !is_odd ? 'repeater-odd' : 'repeater-even' );
@@ -59,6 +60,13 @@
                 } );
                 self.$items.append( $item.html() );
                 self.key++;
+            },
+            on_remove: function( event ) {
+                if ( event !== undefined )
+                    event.preventDefault();
+                var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
+                if ( key && confirm( self.$el.data( 'remove-label' ) ) )
+                    self.$items.find( '*[data-repeater-key="' + key + '"]' ).remove();
             },
         };
         self.methods.ready();

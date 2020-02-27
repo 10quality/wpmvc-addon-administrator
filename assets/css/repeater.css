@@ -25,3 +25,32 @@
 *[role=repeater] .repeater-even {
     background-color: #f0f4f5;
 }
+*[role=repeater] td[role="repeater-actions"] {
+    width: 50px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+*[role=repeater] td[role="repeater-actions"] .actions-list {
+    display: flex;
+    flex-direction: row;
+}
+*[role=repeater] td[role="repeater-actions"] button {
+    color: #777;
+    border: none;
+    outline: none;
+    padding: 1px 5px !important;
+    background: transparent !important;
+    cursor: pointer !important;
+}
+*[role=repeater] td[role="repeater-actions"] button[role="repeater-remove"]:hover {
+    color: #F44336;
+}
+*[role=repeater] td[role="repeater-actions"] button[role="repeater-remove"]:active {
+    color: #C62828;
+}
+*[role=repeater] td[role="repeater-actions"] button[role="repeater-edit-index"]:hover {
+    color: #007cba;
+}
+*[role=repeater] td[role="repeater-actions"] button[role="repeater-edit-index"]:active {
+    color: #01547d;
+}
