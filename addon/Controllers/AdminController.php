@@ -269,6 +269,9 @@ class AdminController extends Controller
                 $attributes['class'] = '';
             $attributes['class'] .= trim( ' ' . ( $helper->is_repeater_odd ? 'repeater-odd' : 'repeater-even' ) );
         }
+        if ( $helper->is_repeater_field ) {
+            $attributes['data-repeater-field'] = 1;
+        }
         foreach ( $attributes as $key => $value ) {
             $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
         }

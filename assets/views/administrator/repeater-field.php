@@ -9,7 +9,7 @@
  * @version 1.0.1
  */
 ?>
-<tr id="tr-<?php echo esc_attr( $repeater_id ) ?>-<?php echo esc_attr( $field_id ) ?>"
+<tr id="tr-<?php echo esc_attr( $repeater_id ) ?>-<?php echo esc_attr( $field_id ) ?>-<?php echo esc_attr( $key ) ?>"
     <?php echo apply_filters( 'administrator_control_tr', [], $field, $model, $helper ) ?>
 >
     <th><?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?></th>

@@ -50,6 +50,13 @@ class RenderHelper
      */
     public $is_repeater_odd = true;
     /**
+     * Flag that indicates if is a repeater field or not.
+     * @since 1.0.1
+     * 
+     * @var bool
+     */
+    public $is_repeater_field = false;
+    /**
      * Opens a section logically.
      * @since 1.0.1
      */
@@ -117,6 +124,7 @@ class RenderHelper
                 $keys = array_keys( $field['value'] );
             break;
         }
+        $this->is_repeater_field = true;
         foreach ( $keys as $key ) {
             foreach ( $this->repeater_fields as $field_id => $field ) {
                 $field['value'] = $field['value'][$key];
@@ -128,10 +136,12 @@ class RenderHelper
                     'controls' => &$controls,
                     'field_id' => &$field_id,
                     'field' => &$field,
+                    'key' => &$key,
                     'helper' => &$this,
                 ] );
             }
             $this->is_repeater_odd = ! $this->is_repeater_odd;
         }
+        $this->is_repeater_field = false;
     }
 }
