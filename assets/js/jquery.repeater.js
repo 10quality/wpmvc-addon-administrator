@@ -4,7 +4,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.2
  */
 ( function( $ ) { $( document ).ready( function() {
     /**
@@ -62,16 +62,20 @@
                     $( this ).attr( 'data-repeater-key', self.key );
                     aux++;
                 } );
+                $( document ).trigger( 'repeater:items.add.before', [self.$items, self] );
                 self.$items.append( $item.html() );
+                $( document ).trigger( 'repeater:items.add.after', [self.$items, self.key, self] );
                 self.key++;
             },
             on_remove: function( event ) {
                 if ( event !== undefined )
                     event.preventDefault();
                 var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
+                $( document ).trigger( 'repeater:items.remove.before', [self.$items, key, self] );
                 if ( key !== undefined && confirm( self.$el.data( 'remove-message' ) ) ) {
                     self.$items.find( '*[data-repeater-key="' + key + '"]' ).remove();
                     self.methods.update_evens_odds();
+                    $( document ).trigger( 'repeater:items.remove.after', [self.$items, key, self] );
                 }
             },
             init_actions: function() {
@@ -99,6 +103,7 @@
                         return self.methods.on_index_update();
                     }
                 } );
+                $( document ).trigger( 'repeater:init', self );
             },
             update_evens_odds: function() {
                 var keys = [];
