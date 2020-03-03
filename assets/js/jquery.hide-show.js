@@ -5,6 +5,32 @@
  * @license MIT
  * @version 1.0.2
  */
+
+/**
+ * Returns unique string ID.
+ * @since 1.0.2
+ *
+ * @link https://stackoverflow.com/questions/4872380/uniqid-in-javascript-jquery
+ *
+ * @return string
+ */
+function uniqid( prefix, more_entropy )
+{
+    var id = Date.now() / 1000;
+    id = id.toString( 16 ).split( '.' ).join( '' );
+    while( id.length < 14 ){
+        id += '0';
+    }
+    var more = '';
+    if ( more_entropy !== undefined && more_entropy === true ) {
+        more = '.' + Math.round( Math.random() * 100000000 );
+    }
+    return ( prefix !== undefined ? prefix : '' ) + id + more;
+};
+/**
+ * jQuery script.
+ * @since 1.0.2
+ */
 ( function( $ ) { $( document ).ready( function() {
     /**
      * Show listener.
@@ -15,6 +41,7 @@
     {
         var self = this;
         self.$el = $( this );
+        self.id = uniqid();
         // Fields listener
         self.fields = {};
         self.methods = {
@@ -25,16 +52,18 @@
                         field = field.split( ':' );
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
-                for ( var field_id in self.fields ) {
-                    if ( $( '#' + field_id ).length === 0 )
+                for ( var field_selector in self.fields ) {
+                    if ( $( field_selector ).length === 0 )
                         continue;
-                    $( '#' + field_id ).on( 'change', self.methods.on_listener );
+                    $( field_selector ).attr( 'data-listener-' + self.id, field_selector );
+                    $( document ).on( 'change', field_selector, self.methods.on_listener );
                 }
             },
             on_listener: function()
             {
                 var val = $( this ).val();
-                if ( self.fields[$( this ).attr( 'id' )]
+                var field_selector = $( this ).data( 'listener-' + self.id );
+                if ( self.fields[field_selector]
                     .find( function( value ) { return value == val; } ) !== undefined
                 ) {
                     self.methods.show();
@@ -62,6 +91,7 @@
     {
         var self = this;
         self.$el = $( this );
+        self.id = uniqid();
         // Fields listener
         self.fields = {};
         self.methods = {
@@ -72,16 +102,18 @@
                         field = field.split( ':' );
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
-                for ( var field_id in self.fields ) {
-                    if ( $( '#' + field_id ).length === 0 )
+                for ( var field_selector in self.fields ) {
+                    if ( $( field_selector ).length === 0 )
                         continue;
-                    $( '#' + field_id ).on( 'change', self.methods.on_listener );
+                    $( field_selector ).attr( 'data-listener-' + self.id, field_selector );
+                    $( document ).on( 'change', field_selector, self.methods.on_listener );
                 }
             },
             on_listener: function()
             {
                 var val = $( this ).val();
-                if ( self.fields[$( this ).attr( 'id' )]
+                var field_selector = $( this ).data( 'listener-' + self.id );
+                if ( self.fields[field_selector]
                     .find( function( value ) { return value == val; } ) !== undefined
                 ) {
                     self.methods.hide();
