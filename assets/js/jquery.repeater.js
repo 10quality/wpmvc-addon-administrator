@@ -71,8 +71,8 @@
                 if ( event !== undefined )
                     event.preventDefault();
                 var key = $( this ).closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
-                $( document ).trigger( 'repeater:items.remove.before', [self.$items, key, self] );
                 if ( key !== undefined && confirm( self.$el.data( 'remove-message' ) ) ) {
+                    $( document ).trigger( 'repeater:items.remove.before', [self.$items, key, self] );
                     self.$items.find( '*[data-repeater-key="' + key + '"]' ).remove();
                     self.methods.update_evens_odds();
                     $( document ).trigger( 'repeater:items.remove.after', [self.$items, key, self] );
