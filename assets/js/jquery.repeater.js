@@ -60,9 +60,9 @@
                 } );
                 $( document ).trigger( 'repeater:items.add.before', [self.$items, self] );
                 self.$items.append( $item.html() );
-                self.methods.update_evens_odds();
                 $( document ).trigger( 'repeater:items.add.after', [self.$items, self.key, self] );
                 self.key++;
+                self.methods.update_evens_odds();
             },
             on_remove: function( event ) {
                 if ( event !== undefined )
