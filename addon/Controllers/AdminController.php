@@ -30,7 +30,6 @@ class AdminController extends Controller
         // Registered settings models
         $models = $this->get_models();
         foreach ( $models as $key => $model ) {
-            //vdump_and_die( array_key_exists( 'capability', $model->menu ) ? $model->menu['capability'] : 'manage_options' );
             if ( array_key_exists( 'parent', $model->menu ) ) {
                 add_submenu_page(
                     $model->menu['parent'],
