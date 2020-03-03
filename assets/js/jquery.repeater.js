@@ -38,8 +38,6 @@
             on_add: function( event ) {
                 if ( event !== undefined )
                     event.preventDefault();
-                var $last_item = self.$items.find( '*[data-repeater-field="1"]:last-child' );
-                var is_odd = $last_item.length === 0 || $last_item.hasClass( 'repeater-even' );
                 var $item = $('<div></div>');
                 $item.html( self.$template.html() );
                 $item.find( '*' ).each( function() {
@@ -56,14 +54,13 @@
                             $( document ).find( '#repeater-actions' ).html()
                         );
                     }
-                    $( this ).removeClass( !is_odd ? 'repeater-odd' : 'repeater-even' );
-                    $( this ).addClass( is_odd ? 'repeater-odd' : 'repeater-even' );
                     $( this ).attr( 'data-repeater-field', 1 );
                     $( this ).attr( 'data-repeater-key', self.key );
                     aux++;
                 } );
                 $( document ).trigger( 'repeater:items.add.before', [self.$items, self] );
                 self.$items.append( $item.html() );
+                self.methods.update_evens_odds();
                 $( document ).trigger( 'repeater:items.add.after', [self.$items, self.key, self] );
                 self.key++;
             },
