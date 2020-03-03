@@ -279,10 +279,12 @@ class AdminController extends Controller
         // Hide/show
         if ( array_key_exists( 'show_if', $field ) && is_array( $field['show_if'] ) ) {
             $show_if = [];
-            foreach ( $field['show_if'] as $field_id => $value) {
-                $show_if[] = $field_id . ':' . is_array( $value ) ? implode( ',', $value ) : $value;
+            foreach ( $field['show_if'] as $field_id => $value ) {
+                if ( ! is_array( $value ) )
+                    $value = [$value];
+                $show_if[] = $field_id . ':' . implode( ',', $value );
                 // Hide current field ?
-                if ( $model->$field_id !== $value ) {
+                if ( ! in_array( $model->$field_id, $value ) ) {
                     $attributes['class'] = 'hidden';
                     $attributes['style'] = 'display:none';
                 }
@@ -291,10 +293,12 @@ class AdminController extends Controller
         }
         if ( array_key_exists( 'hide_if', $field ) && is_array( $field['hide_if'] ) ) {
             $hide_if = [];
-            foreach ( $field['hide_if'] as $field_id => $value) {
-                $hide_if[] = $field_id . ':' . is_array( $value ) ? implode( ',', $value ) : $value;
+            foreach ( $field['hide_if'] as $field_id => $value ) {
+                if ( ! is_array( $value ) )
+                    $value = [$value];
+                $hide_if[] = $field_id . ':' . implode( ',', $value );
                 // Hide current field ?
-                if ( $model->$field_id === $value ) {
+                if ( in_array( $model->$field_id, $value ) ) {
                     $attributes['class'] = 'hidden';
                     $attributes['style'] = 'display:none';
                 }

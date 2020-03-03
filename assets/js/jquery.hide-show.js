@@ -26,9 +26,9 @@
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
                 for ( var field_id in self.fields ) {
-                    if ( $( '#' . field_id ).length === 0 )
+                    if ( $( '#' + field_id ).length === 0 )
                         continue;
-                    $( '#' . field_id ).on( 'change', self.methods.on_listener );
+                    $( '#' + field_id ).on( 'change', self.methods.on_listener );
                 }
             },
             on_listener: function()
@@ -51,7 +51,7 @@
                 self.$el.hide();
             },
         };
-        self.methods.ready():
+        self.methods.ready();
     }
     /**
      * Show listener.
@@ -73,9 +73,9 @@
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
                 for ( var field_id in self.fields ) {
-                    if ( $( '#' . field_id ).length === 0 )
+                    if ( $( '#' + field_id ).length === 0 )
                         continue;
-                    $( '#' . field_id ).on( 'change', self.methods.on_listener );
+                    $( '#' + field_id ).on( 'change', self.methods.on_listener );
                 }
             },
             on_listener: function()
@@ -98,7 +98,7 @@
                 self.$el.hide();
             },
         };
-        self.methods.ready():
+        self.methods.ready();
     }
     /**
      * Plugin init.
