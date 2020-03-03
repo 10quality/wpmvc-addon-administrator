@@ -17,7 +17,7 @@ use WPMVC\Addons\Administrator\Helpers\RenderHelper;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.2
  */
 class AdminController extends Controller
 {
@@ -211,6 +211,13 @@ class AdminController extends Controller
             '1.0.1',
             true
         );
+        wp_enqueue_script(
+            'wpmvc-administrator-hideshow',
+            addon_assets_url( 'js/jquery.hide-show.js', __FILE__ ),
+            ['jquery'],
+            '1.0.2',
+            true
+        );
         do_action( 'administrator_enqueue_' . $model->id );
         // Render header
         AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );
@@ -261,6 +268,7 @@ class AdminController extends Controller
     public function control_tr( $attributes, $field, SettingsModel $model, RenderHelper $helper )
     {
         if ( ! is_array( $attributes ) ) return '';
+        // Special controls
         if ( array_key_exists( 'control' , $field )
             && is_array( $field['control'] )
             && array_key_exists( 'type' , $field['control'] )
@@ -269,6 +277,32 @@ class AdminController extends Controller
             $attributes['class'] = 'hidden';
             $attributes['style'] = 'display:none';
         }
+        // Hide/show
+        if ( array_key_exists( 'show_if', $field ) && is_array( $field['show_if'] ) ) {
+            $show_if = [];
+            foreach ( $field['show_if'] as $field_id => $value) {
+                $show_if[] = $field_id . ':' . is_array( $value ) ? implode( ',', $value ) : $value;
+                // Hide current field ?
+                if ( $model->$field_id !== $value ) {
+                    $attributes['class'] = 'hidden';
+                    $attributes['style'] = 'display:none';
+                }
+            }
+            $attributes['data-show-if'] = implode( '|' , $show_if );
+        }
+        if ( array_key_exists( 'hide_if', $field ) && is_array( $field['hide_if'] ) ) {
+            $hide_if = [];
+            foreach ( $field['hide_if'] as $field_id => $value) {
+                $hide_if[] = $field_id . ':' . is_array( $value ) ? implode( ',', $value ) : $value;
+                // Hide current field ?
+                if ( $model->$field_id === $value ) {
+                    $attributes['class'] = 'hidden';
+                    $attributes['style'] = 'display:none';
+                }
+            }
+            $attributes['data-hide-if'] = implode( '|' , $hide_if );
+        }
+        // Repeater
         if ( $helper->is_repeater_opened ) {
             $attributes['data-repeater'] = 1;
             if ( ! array_key_exists( 'class', $attributes ) )
@@ -281,6 +315,7 @@ class AdminController extends Controller
         if ( array_key_exists( 'repeater_key' , $field ) ) {
             $attributes['data-repeater-key'] = $field['repeater_key'];
         }
+        // Render
         foreach ( $attributes as $key => $value ) {
             $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
         }
