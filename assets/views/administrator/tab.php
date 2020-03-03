@@ -6,7 +6,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.2
  */
 ?>
 <?php do_action( 'administrator_content_top_' . $model->id . '_tab_' . $tab, $model ) ?>
@@ -33,6 +33,7 @@
                     role="repeater"
                     data-remove-message="<?php echo esc_attr( array_key_exists( 'remove_message', $field ) ? $field['remove_message'] : __( 'Remove item?', 'wpmvc-addon-administrator' ) ) ?>"
                 <?php endif ?>
+                <?php echo apply_filters( 'administrator_control_section', [], $field, $model, $helper ) ?>
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
                     <h3><?php echo $field['title'] ?><?php if ($field['type'] === 'repeater_open' ) : ?>
@@ -78,7 +79,7 @@
             <?php $helper->render_repeater( $model, $controls ) ?>
             <?php if ( $helper->is_section_opened ) : ?></table><?php endif ?>
             <?php $helper->close_section() ?>
-            <hr id="<?php echo esc_attr( $field_id ) ?>"/>
+            <hr id="<?php echo esc_attr( $field_id ) ?>" <?php echo apply_filters( 'administrator_control_section', [], $field, $model, $helper ) ?>/>
             <?php if ( $helper->is_section_opened ) : ?><table class="form-table"><?php endif ?>
         <?php elseif ( array_key_exists( 'type', $field )
             && $field['type'] === 'callback'

@@ -12,7 +12,7 @@ use WPMVC\Addon;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.2
  */
 class AdministratorAddon extends Addon
 {
@@ -49,6 +49,7 @@ class AdministratorAddon extends Addon
             ];
         }, 1 );
         add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 4 );
+        add_filter( 'administrator_control_section', [&$this, 'control_section'], 99999, 4 );
     }
     /**
      * Inits
@@ -76,14 +77,33 @@ class AdministratorAddon extends Addon
      * 
      * @hook administrator_control_tr
      * 
-     * @param array $attributes
-     * @param array $field
+     * @param array                                               $attributes
+     * @param array                                               $field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     * @param \WPMVC\Addons\Administrator\Helpers\RenderHelper    $helper
      * 
      * @return array|string
      */
     public function control_tr( $attributes, $field, $model, $helper )
     {
         return $this->mvc->action( 'AdminController@control_tr', $attributes, $field, $model, $helper );
+    }
+    /**
+     * Returns section control's attributes.
+     * @since 1.0.2
+     * 
+     * @hook administrator_control_section
+     * 
+     * @param array                                               $attributes
+     * @param array                                               $field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     * @param \WPMVC\Addons\Administrator\Helpers\RenderHelper    $helper
+     * 
+     * @return array|string
+     */
+    public function control_section( $attributes, $field, $model, $helper )
+    {
+        return $this->mvc->action( 'AdminController@control_section', $attributes, $field, $model, $helper );
     }
     /**
      * Registers/enqueues general admin assets.

@@ -277,36 +277,8 @@ class AdminController extends Controller
             $attributes['style'] = 'display:none';
         }
         // Hide/show
-        if ( array_key_exists( 'show_if', $field ) && is_array( $field['show_if'] ) ) {
-            $show_if = [];
-            foreach ( $field['show_if'] as $field_id => $value ) {
-                if ( ! is_array( $value ) )
-                    $value = [$value];
-                $is_selector = preg_match( '/^(\*|\.|#)/', $field_id );
-                $show_if[] = ( $is_selector ? '' : '#' ) . $field_id . ':' . implode( ',', $value );
-                // Hide current field ?
-                if ( ! $is_selector && ! in_array( $model->$field_id, $value ) ) {
-                    $attributes['class'] = 'hidden';
-                    $attributes['style'] = 'display:none';
-                }
-            }
-            $attributes['data-show-if'] = implode( '|' , $show_if );
-        }
-        if ( array_key_exists( 'hide_if', $field ) && is_array( $field['hide_if'] ) ) {
-            $hide_if = [];
-            foreach ( $field['hide_if'] as $field_id => $value ) {
-                if ( ! is_array( $value ) )
-                    $value = [$value];
-                $is_selector = preg_match( '/^(\*|\.|#)/', $field_id );
-                $hide_if[] = ( $is_selector ? '' : '#' ) . $field_id . ':' . implode( ',', $value );
-                // Hide current field ?
-                if ( ! $is_selector && in_array( $model->$field_id, $value ) ) {
-                    $attributes['class'] = 'hidden';
-                    $attributes['style'] = 'display:none';
-                }
-            }
-            $attributes['data-hide-if'] = implode( '|' , $hide_if );
-        }
+        $this->add_field_attribute_show_if( $attributes, $field, $model );
+        $this->add_field_attribute_hide_if( $attributes, $field, $model );
         // Repeater
         if ( $helper->is_repeater_opened ) {
             $attributes['data-repeater'] = 1;
@@ -321,10 +293,29 @@ class AdminController extends Controller
             $attributes['data-repeater-key'] = $field['repeater_key'];
         }
         // Render
-        foreach ( $attributes as $key => $value ) {
-            $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
-        }
-        return implode( ' ', $attributes );
+        return $this->render_attributes( $attributes );
+    }
+    /**
+     * Returns section control's attributes.
+     * @since 1.0.2
+     * 
+     * @hook administrator_control_section
+     * 
+     * @param array                                               $attributes
+     * @param array                                               $field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     * @param \WPMVC\Addons\Administrator\Helpers\RenderHelper    $helper
+     * 
+     * @return array|string
+     */
+    public function control_section( $attributes, $field, SettingsModel $model, RenderHelper $helper )
+    {
+        if ( ! is_array( $attributes ) ) return '';
+        // Hide/show
+        $this->add_field_attribute_show_if( $attributes, $field, $model );
+        $this->add_field_attribute_hide_if( $attributes, $field, $model );
+        // Render
+        return $this->render_attributes( $attributes );
     }
     /**
      * Returns array collection with setting models available.
@@ -366,5 +357,72 @@ class AdminController extends Controller
                 return $control && $control instanceof Control && in_array( $control->type, $controls_in_use );
             }
         );
+    }
+    /**
+     * Adds show if logic to field attributes.
+     * @since 1.0.2
+     * 
+     * @param array                                               &$attributes Current list of attributes.
+     * @param array                                               &$field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     */
+    private function add_field_attribute_show_if( &$attributes, &$field, &$model )
+    {
+        if ( array_key_exists( 'show_if', $field ) && is_array( $field['show_if'] ) ) {
+            $show_if = [];
+            foreach ( $field['show_if'] as $field_id => $value ) {
+                if ( ! is_array( $value ) )
+                    $value = [$value];
+                $is_selector = preg_match( '/^(\*|\.|#)/', $field_id );
+                $show_if[] = ( $is_selector ? '' : '#' ) . $field_id . ':' . implode( ',', $value );
+                // Hide current field ?
+                if ( ! $is_selector && ! in_array( $model->$field_id, $value ) ) {
+                    $attributes['class'] = 'hidden';
+                    $attributes['style'] = 'display:none';
+                }
+            }
+            $attributes['data-show-if'] = implode( '|' , $show_if );
+        }
+    }
+    /**
+     * Adds hide if logic to field attributes.
+     * @since 1.0.2
+     * 
+     * @param array                                               &$attributes Current list of attributes.
+     * @param array                                               &$field
+     * @param \WPMVC\Addons\Administrator\Abstracts\SettingsModel $model
+     */
+    private function add_field_attribute_hide_if( &$attributes, &$field, &$model )
+    {
+        if ( array_key_exists( 'hide_if', $field ) && is_array( $field['hide_if'] ) ) {
+            $hide_if = [];
+            foreach ( $field['hide_if'] as $field_id => $value ) {
+                if ( ! is_array( $value ) )
+                    $value = [$value];
+                $is_selector = preg_match( '/^(\*|\.|#)/', $field_id );
+                $hide_if[] = ( $is_selector ? '' : '#' ) . $field_id . ':' . implode( ',', $value );
+                // Hide current field ?
+                if ( ! $is_selector && in_array( $model->$field_id, $value ) ) {
+                    $attributes['class'] = 'hidden';
+                    $attributes['style'] = 'display:none';
+                }
+            }
+            $attributes['data-hide-if'] = implode( '|' , $hide_if );
+        }
+    }
+    /**
+     * Render's HTML attributes.
+     * @since 1.0.2
+     * 
+     * @param array $attributes
+     * 
+     * @return string
+     */
+    private function render_attributes( $attributes )
+    {
+        foreach ( $attributes as $key => $value ) {
+            $attributes[$key] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
+        }
+        return implode( ' ', $attributes );
     }
 }
