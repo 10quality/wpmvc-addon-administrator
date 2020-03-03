@@ -29,27 +29,37 @@ class AdministratorAddon extends Addon
      */
     public function init()
     {
-        static::$instance = $this;
-        add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
-        add_action( 'admin_menu', [&$this, 'settings_init'], 5 );
-        add_filter( 'administrator_controls', [&$this, 'register_controls'], 1 );
-        add_filter( 'administrator_no_value_fields', function() {
-            return [
-                'section_open',
-                'section_close',
-                'section_separator',
-                'callback',
-                'repeater_open',
-                'repeater_close',
-            ];
-        }, 1 );
-        add_filter( 'administrator_bool_fields', function() {
-            return [
-                'checkbox',
-            ];
-        }, 1 );
-        add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 4 );
-        add_filter( 'administrator_control_section', [&$this, 'control_section'], 99999, 4 );
+        add_filter( 'administrator_models', [&$this, 'register_models'], 1 );
+    }
+    /**
+     * Function called when user is on admin dashboard.
+     * @since 1.0.2
+     */
+    public function on_admin()
+    {
+        if ( !isset( static::$instance ) ) {
+            static::$instance = $this;
+            add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
+            add_action( 'admin_menu', [&$this, 'settings_init'], 5 );
+            add_filter( 'administrator_controls', [&$this, 'register_controls'], 1 );
+            add_filter( 'administrator_no_value_fields', function() {
+                return [
+                    'section_open',
+                    'section_close',
+                    'section_separator',
+                    'callback',
+                    'repeater_open',
+                    'repeater_close',
+                ];
+            }, 1 );
+            add_filter( 'administrator_bool_fields', function() {
+                return [
+                    'checkbox',
+                ];
+            }, 1 );
+            add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 4 );
+            add_filter( 'administrator_control_section', [&$this, 'control_section'], 99999, 4 );
+        }
     }
     /**
      * Inits
@@ -119,6 +129,27 @@ class AdministratorAddon extends Addon
             [],
             '4.7.0'
         );
+    }
+    /**
+     * Returns settings models.
+     * Reads config file and registers settings models.
+     * @since 1.0.2
+     * 
+     * @hook administrator_models
+     * 
+     * @param array $models
+     * 
+     * @return array
+     */
+    public function register_models( $models )
+    {
+        $config = $this->main->config->get( 'administrator_models' );
+        if ( $config && is_array( $config ) && count( $config ) ) {
+            foreach ( $config as $id => $class ) {
+                $models[$id] = $class;
+            }
+        }
+        return $models;
     }
     /**
      * Renders an addon view.
