@@ -9,7 +9,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.3
  */
 class DatepickerControl extends Control
 {
@@ -54,7 +54,7 @@ class DatepickerControl extends Control
             'wpmvc-administrator-datepicker',
             addon_assets_url( 'js/jquery.datepicker.js', __FILE__ ),
             ['jquery-ui-datepicker'],
-            '1.0.0',
+            '1.0.4',
             true
         );
     }

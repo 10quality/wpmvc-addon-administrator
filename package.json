@@ -1,6 +1,6 @@
 {
   "name": "wpmvc-addon-administrator",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "WordPress MVC customizer add-on.",
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
     "gulp": "^4.0.2",
     "jquery-ui": "^1.12.1",
     "wordpress-media-gallery": "^1.2.0"
+  },
+  "dependencies": {
+    "select2": "^4.0.13"
   }
 }

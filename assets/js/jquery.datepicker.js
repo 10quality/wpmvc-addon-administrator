@@ -3,7 +3,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.2
+ * @version 1.0.4
  */
 ( function( $ ) { $( document ).ready( function() {
     /**
@@ -30,7 +30,7 @@
      */
     $( document ).on( 'repeater:items.add.after', function( event, $items, key ) {
         if ( $items.find( '*[data-repeater-key="' + key + '"] .datepicker' ).length ) {
-            $datepicker = $items.find( '*[data-repeater-key="' + key + '"] .datepicker' );
+            var $datepicker = $items.find( '*[data-repeater-key="' + key + '"] .datepicker' );
             $datepicker.datepicker( {
                 showOtherMonths: $datepicker.data( 'show-other-months' ) || true,
                 selectOtherMonths: $datepicker.data( 'select-other-months' ) || true,
