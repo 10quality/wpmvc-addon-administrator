@@ -21,6 +21,9 @@ $is_multiple = isset( $control ) && array_key_exists( 'multiple', $control );
     lang="<?php echo esc_attr( substr( get_locale(), 0, 2 ) ) ?>"
     <?php echo $html_attributes ?>
 >
+    <?php if ( isset( $control ) && array_key_exists( 'add_empty', $control ) && $control['add_empty'] === true ) : ?>
+        <option value=""><?php echo array_key_exists( 'empty_label', $control ) ? $control['empty_label'] : '' ?></option>
+    <?php endif ?>
     <?php if ( isset( $options ) ) : ?>
         <?php foreach ( $options as $val => $label ) : ?>
             <option value="<?php echo esc_attr( $val ) ?>"
