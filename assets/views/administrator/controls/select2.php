@@ -31,5 +31,15 @@ $is_multiple = isset( $control ) && array_key_exists( 'multiple', $control );
                 ) : ?>selected="selected"<?php endif ?>
                 ><?php echo esc_attr( $label ) ?></option>
         <?php endforeach ?>
+    <?php elseif ( !empty( $value ) ) : ?>
+        <?php if ( is_array( $value ) ) : ?>
+            <?php foreach ( $value as $item ) : ?>
+                <option value="<?php echo esc_attr( $item ) ?>" selected
+                    ><?php echo apply_filters( 'administrator_value_' . $id, $item ) ?></option>
+            <?php endforeach ?>
+        <?php else : ?>
+            <option value="<?php echo esc_attr( $value ) ?>" selected
+                ><?php echo apply_filters( 'administrator_value_' . $id, $value ) ?></option>
+        <?php endif ?>
     <?php endif ?>
 </select>
