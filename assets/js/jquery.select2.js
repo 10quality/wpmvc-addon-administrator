@@ -29,6 +29,7 @@
      *
      * @link https://select2.org/data-sources/ajax
      *
+     * @param {object} response
      * @param {object} params
      *
      * @return {object}
@@ -46,6 +47,22 @@
         }
         return data;
     };
+    /**
+     * Select 2 default response results handler.
+     * @since 1.0.4
+     *
+     * @link https://select2.org/data-sources/ajax
+     *
+     * @param {object} row Results row.
+     *
+     * @return {object}
+     */
+    window.select2_format_html = function( row ) {
+        if ( row.loading ) {
+            return row.text;
+        }
+        return $( row.text );
+    }
     /**
      * Init datepicker plugin on every input requesting it.
      * @since 1.0.4
