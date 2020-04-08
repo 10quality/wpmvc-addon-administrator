@@ -65,7 +65,7 @@
         }
         $select2.select2( {
             placeholder: $select2.attr( 'placeholder' ) || undefined,
-            allowClear: $select2.data( 'allow-clear' ) || true,
+            allowClear: $select2.data( 'allow-clear' ) || false,
             ajax: ajax,
             minimumInputLength: $select2.data( 'min-input-length' ) || 0,
             maximumInputLength: $select2.data( 'max-input-length' ) || 0,
@@ -108,7 +108,7 @@
             }
             $select2.select2( {
                 placeholder: $select2.attr( 'placeholder' ) || undefined,
-                allowClear: $select2.data( 'allow-clear' ) || true,
+                allowClear: $select2.data( 'allow-clear' ) || false,
                 ajax: ajax,
                 minimumInputLength: $select2.data( 'min-input-length' ) || 0,
                 maximumInputLength: $select2.data( 'max-input-length' ) || 0,
