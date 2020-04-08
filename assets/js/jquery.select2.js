@@ -63,7 +63,7 @@
             }
         }
         $( this ).select2( {
-            placeholder: $( this ).data( 'placeholder' ) || undefined,
+            placeholder: $( this ).attr( 'placeholder' ) || undefined,
             allowClear: $( this ).data( 'allow-clear' ) || true,
             ajax: ajax,
             minimumInputLength: $( this ).data( 'min-input-length' ) || 0,
@@ -106,7 +106,7 @@
                 }
             }
             $select2.select2( {
-                placeholder: $select2.data( 'placeholder' ) || undefined,
+                placeholder: $select2.attr( 'placeholder' ) || undefined,
                 allowClear: $select2.data( 'allow-clear' ) || true,
                 ajax: ajax,
                 minimumInputLength: $select2.data( 'min-input-length' ) || 0,
