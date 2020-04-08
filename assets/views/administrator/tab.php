@@ -6,7 +6,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.2
+ * @version 1.0.4
  */
 ?>
 <?php do_action( 'administrator_content_top_' . $model->id . '_tab_' . $tab, $model ) ?>
@@ -36,7 +36,7 @@
                 <?php echo apply_filters( 'administrator_control_section', [], $field, $model, $helper ) ?>
             >
                 <?php if ( array_key_exists( 'title', $field ) ) : ?>
-                    <h3><?php echo $field['title'] ?><?php if ($field['type'] === 'repeater_open' ) : ?>
+                    <h3><?php echo $field['title'] ?><?php if ( $field['type'] === 'repeater_open' ) : ?>
                         <button type="button" class="repeater-add button" role="repeater-add">
                             <?php if ( ! array_key_exists( 'repeate_icon', $field ) || $field['repeate_icon'] !== false ) : ?>
                                 <i class="fa <?php echo esc_attr( array_key_exists( 'repeate_icon', $field ) ? $field['repeate_icon'] : 'fa-plus-circle' ) ?>"
@@ -92,7 +92,7 @@
             <?php if ( !$helper->is_section_opened ) : ?><table class="form-table"><?php endif ?>
             <tr id="tr-<?php echo esc_attr( $field_id ) ?>" <?php echo apply_filters( 'administrator_control_tr', [], $field, $model, $helper ) ?>>
                 <th><?php echo array_key_exists( 'title', $field ) ? $field['title'] : $field_id ?></th>
-                <td>
+                <td class="type-<?php echo esc_attr( $field['type'] ) ?>">
                     <?php if ( array_key_exists( $field['_control'], $controls ) ) : ?>
                         <?php if ( $helper->is_repeater_opened ) : $field['value'] = ''; endif ?>
                         <?php $controls[$field['_control']]->render( $field ) ?>

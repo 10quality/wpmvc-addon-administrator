@@ -44,6 +44,12 @@ class Select2Control extends Control
             [],
             '4.0.13'
         );
+        wp_enqueue_style(
+            'wpmvc-administrator-select2',
+            addon_assets_url( 'css/select2.css', __FILE__ ),
+            ['select2'],
+            '1.0.4'
+        );
         wp_enqueue_script(
             'select2',
             addon_assets_url( 'js/select2.min.js', __FILE__ ),
