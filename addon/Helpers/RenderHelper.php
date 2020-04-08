@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.4
  */
 class RenderHelper
 {
