@@ -52,35 +52,36 @@
      */
     $( '.select2' ).each( function() {
         var ajax = undefined;
-        if ( $( this ).data( 'ajax' ) ) {
+        var $select2 = $( '#' + $( this ).attr( 'id' ) );
+        if ( $select2.data( 'ajax' ) ) {
             ajax = {
-                url: $( this ).data( 'ajax' ),
-                dataType: $( this ).data( 'ajax-data-type' ) || 'json',
-                data: $( this ).data( 'ajax-request' ) ? window[$( this ).data( 'ajax-request' )] : window.default_select2_request,
-                processResults: $( this ).data( 'ajax-results' ) ? window[$( this ).data( 'ajax-results' )] : window.default_select2_results,
-                delay: $( this ).data( 'ajax-delay' ) || undefined,
-                cache: $( this ).data( 'ajax-cache' ) || undefined,
+                url: $select2.data( 'ajax' ),
+                dataType: $select2.data( 'ajax-data-type' ) || 'json',
+                data: $select2.data( 'ajax-request' ) ? window[$( this ).data( 'ajax-request' )] : window.default_select2_request,
+                processResults: $select2.data( 'ajax-results' ) ? window[$( this ).data( 'ajax-results' )] : window.default_select2_results,
+                delay: $select2.data( 'ajax-delay' ) || undefined,
+                cache: $select2.data( 'ajax-cache' ) || undefined,
             }
         }
-        $( this ).select2( {
-            placeholder: $( this ).attr( 'placeholder' ) || undefined,
-            allowClear: $( this ).data( 'allow-clear' ) || true,
+        $select2.select2( {
+            placeholder: $select2.attr( 'placeholder' ) || undefined,
+            allowClear: $select2.data( 'allow-clear' ) || true,
             ajax: ajax,
-            minimumInputLength: $( this ).data( 'min-input-length' ) || 0,
-            maximumInputLength: $( this ).data( 'max-input-length' ) || 0,
-            maximumSelectionLength: $( this ).data( 'max-selection-length' ) || 0,
-            minimumResultsForSearch: $( this ).data( 'min-results-search' ) || 0,
-            templateResult: $( this ).data( 'template-results' ) ? window[$( this ).data( 'template-results' )] : undefined,
-            templateSelection: $( this ).data( 'template-selection' ) ? window[$( this ).data( 'template-selection' )] : undefined,
-            sorter: $( this ).data( 'sorter' ) ? window[$( this ).data( 'sorter' )] : undefined,
-            tokenizer: $( this ).data( 'tokenizer' ) ? window[$( this ).data( 'tokenizer' )] : undefined,
-            initSelection: $( this ).data( 'init-selection' ) ? window[$( this ).data( 'init-selection' )] : undefined,
-            matcher: $( this ).data( 'matcher' ) ? window[$( this ).data( 'matcher' )] : undefined,
-            tags: $( this ).data( 'tags' ) || false,
-            selectOnClose: $( this ).data( 'select-on-close' ) || false,
-            scrollAfterSelect: $( this ).data( 'scroll-after-select' ) || false,
-            containerCssClass: $( this ).attr( 'container-class' ) || undefined,
-            language: $( this ).attr( 'lang' ) || undefined,
+            minimumInputLength: $select2.data( 'min-input-length' ) || 0,
+            maximumInputLength: $select2.data( 'max-input-length' ) || 0,
+            maximumSelectionLength: $select2.data( 'max-selection-length' ) || 0,
+            minimumResultsForSearch: $select2.data( 'min-results-search' ) || 0,
+            templateResult: $select2.data( 'template-results' ) ? window[$select2.data( 'template-results' )] : undefined,
+            templateSelection: $select2.data( 'template-selection' ) ? window[$select2.data( 'template-selection' )] : undefined,
+            sorter: $select2.data( 'sorter' ) ? window[$select2.data( 'sorter' )] : undefined,
+            tokenizer: $select2.data( 'tokenizer' ) ? window[$select2.data( 'tokenizer' )] : undefined,
+            initSelection: $select2.data( 'init-selection' ) ? window[$select2.data( 'init-selection' )] : undefined,
+            matcher: $select2.data( 'matcher' ) ? window[$select2.data( 'matcher' )] : undefined,
+            tags: $select2.data( 'tags' ) || false,
+            selectOnClose: $select2.data( 'select-on-close' ) || false,
+            scrollAfterSelect: $select2.data( 'scroll-after-select' ) || false,
+            containerCssClass: $select2.attr( 'container-class' ) || undefined,
+            language: $select2.attr( 'lang' ) || undefined,
         } );
     } );
     /**
@@ -93,8 +94,8 @@
      */
     $( document ).on( 'repeater:items.add.after', function( event, $items, key ) {
         if ( $items.find( '*[data-repeater-key="' + key + '"] .select2' ).length ) {
-            var $select2 = $items.find( '*[data-repeater-key="' + key + '"] .select2' );
             var ajax = undefined;
+            var $select2 = $('#' + $items.find( '*[data-repeater-key="' + key + '"] .select2' ).attr( 'id' ) );
             if ( $select2.data( 'ajax' ) ) {
                 ajax = {
                     url: $select2.data( 'ajax' ),
@@ -137,7 +138,8 @@
      */
     $( document ).on( 'repeater:items.remove.before', function( event, $items, key ) {
         if ( $items.find( '*[data-repeater-key="' + key + '"] .select2' ).length ) {
-            $items.find( '*[data-repeater-key="' + key + '"] .select2' ).select2( 'destroy' );
+            var $select2 = $('#' + $items.find( '*[data-repeater-key="' + key + '"] .select2' ).attr( 'id' ) );
+            $select2.select2( 'destroy' );
         }
     } );
 } ); } )( jQuery );
