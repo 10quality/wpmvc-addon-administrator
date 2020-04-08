@@ -13,7 +13,10 @@ $class = array_merge(
     isset( $class ) ? $class : [],
     ['select2']
 );
-$is_multiple = isset( $control ) && array_key_exists( 'multiple', $control );
+$is_multiple = isset( $control )
+    && array_key_exists( 'attributes', $control )
+    && array_key_exists( 'multiple', $control['attributes'] )
+    && $control['attributes']['multiple'];
 ?>
 <select id="<?php echo esc_attr( $id ) ?>"
     name="<?php echo esc_attr( isset( $name ) ? $name : $id ) ?><?php if ( $is_multiple ) : ?>[]<?php endif ?>"
