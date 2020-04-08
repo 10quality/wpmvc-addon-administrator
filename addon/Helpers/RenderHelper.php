@@ -129,8 +129,8 @@ class RenderHelper
             foreach ( $this->repeater_fields as $field_id => $field ) {
                 $field['field_id'] = $field_id;
                 $field['value'] = $field['value'][$key];
-                $field['id'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. ( is_numeric( $key ) ? '' : $key ) .']';
-                $field['name'] = $field['id'];
+                $field['id'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. $key .']';
+                $field['name'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. ( is_numeric( $key ) ? '' : $key ) .']';
                 $field['repeater_key'] = $key;
                 AdministratorAddon::view( 'administrator.repeater-field', [
                     'repeater_id' => &$this->repeater_id,
