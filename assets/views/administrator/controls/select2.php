@@ -38,11 +38,11 @@ $is_multiple = isset( $control )
         <?php if ( is_array( $value ) ) : ?>
             <?php foreach ( $value as $item ) : ?>
                 <option value="<?php echo esc_attr( $item ) ?>" selected
-                    ><?php echo apply_filters( 'administrator_value_' . $id, $item ) ?></option>
+                    ><?php echo apply_filters( 'administrator_value_' . ( isset( $field_id ) ? $field_id : $id ), $item ) ?></option>
             <?php endforeach ?>
         <?php else : ?>
             <option value="<?php echo esc_attr( $value ) ?>" selected
-                ><?php echo apply_filters( 'administrator_value_' . $id, $value ) ?></option>
+                ><?php echo apply_filters( 'administrator_value_' . ( isset( $field_id ) ? $field_id : $id ), $value ) ?></option>
         <?php endif ?>
     <?php endif ?>
 </select>
