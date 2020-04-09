@@ -58,8 +58,8 @@ function uniqid( prefix, more_entropy )
                             field[0] = '.' + repeater_class;
                         }
                         if ( !$( field[0] ).is( 'input' )
-                            || !$( field[0] ).is( 'select' )
-                            || !$( field[0] ).is( 'textarea' )
+                            && !$( field[0] ).is( 'select' )
+                            && !$( field[0] ).is( 'textarea' )
                         ) {
                             var input_class = 'hsi-' + uniqid();
                             if ( $( field[0] ).find( 'input' ).length ) {
@@ -134,8 +134,8 @@ function uniqid( prefix, more_entropy )
                             field[0] = '.' + repeater_class;
                         }
                         if ( !$( field[0] ).is( 'input' )
-                            || !$( field[0] ).is( 'select' )
-                            || !$( field[0] ).is( 'textarea' )
+                            && !$( field[0] ).is( 'select' )
+                            && !$( field[0] ).is( 'textarea' )
                         ) {
                             var input_class = 'hsi-' + uniqid();
                             if ( $( field[0] ).find( 'input' ).length ) {
