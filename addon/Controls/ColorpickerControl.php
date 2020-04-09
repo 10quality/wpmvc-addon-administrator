@@ -2,6 +2,7 @@
 
 namespace WPMVC\Addons\Administrator\Controls;
 
+use TenQuality\WP\File;
 use WPMVC\Addons\Administrator\Abstracts\Control;
 /**
  * Select2 control.
@@ -54,18 +55,20 @@ class ColorpickerControl extends Control
         wp_enqueue_script(
             'wpmvc-administrator-colorpicker',
             addon_assets_url( 'js/jquery.colorpicker.js', __FILE__ ),
-            ['select2', 'spectrum'],
+            ['jquery', 'spectrum'],
             '1.0.4',
             true
         );
         // i18n support
         $locale = substr( get_locale(), 0, 2 );
-        wp_enqueue_script(
-            'spectrum-i18n-' . $locale,
-            addon_assets_url( 'js/i18n/' . $locale . '.js', __FILE__ ),
-            ['spectrum'],
-            '1.8.0',
-            true
-        );
+        $filename = addon_assets_url( 'js/i18n/jquery.spectrum-' . $locale . '.js', __FILE__ );
+        if ( File::auth()->exists( $filename ) )
+            wp_enqueue_script(
+                'spectrum-i18n-' . $locale,
+                $filename,
+                ['spectrum'],
+                '1.8.0',
+                true
+            );
     }
 }

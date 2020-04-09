@@ -2,6 +2,7 @@
 
 namespace WPMVC\Addons\Administrator\Controls;
 
+use TenQuality\WP\File;
 use WPMVC\Addons\Administrator\Abstracts\Control;
 /**
  * Select2 control.
@@ -66,12 +67,14 @@ class Select2Control extends Control
         );
         // i18n support
         $locale = substr( get_locale(), 0, 2 );
-        wp_enqueue_script(
-            'select2-i18n-' . $locale,
-            addon_assets_url( 'js/i18n/' . $locale . '.js', __FILE__ ),
-            ['select2'],
-            '4.0.13',
-            true
-        );
+        $filename = addon_assets_url( 'js/i18n/' . $locale . '.js', __FILE__ );
+        if ( File::auth()->exists( $filename ) )
+            wp_enqueue_script(
+                'select2-i18n-' . $locale,
+                $filename,
+                ['select2'],
+                '4.0.13',
+                true
+            );
     }
 }
