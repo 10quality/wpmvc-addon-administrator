@@ -12,6 +12,9 @@
     justify-content: space-between;
     cursor: pointer;
 }
+.switch input {
+    display: none !important;
+}
 .switch .controller {
     position: relative;
     overflow: hidden;
