@@ -16,6 +16,7 @@ gulp.task('vendorcss', function() {
     return gulp.src([
             './node_modules/font-awesome/css/font-awesome.min.css',
             './node_modules/jquery-ui/themes/base/datepicker.css',
+            './node_modules/spectrum-colorpicker/spectrum.css',
             './node_modules/select2/dist/css/select2.min.css',
         ])
         .pipe(gulp.dest('./assets/css'));
@@ -24,6 +25,7 @@ gulp.task('vendorcss', function() {
 gulp.task('select2i18n', function() {
     return gulp.src([
             './node_modules/select2/dist/js/i18n/**/*',
+            './node_modules/spectrum-colorpicker/i18n/**/*',
         ])
         .pipe(gulp.dest('./assets/js/i18n'));
 });
@@ -31,6 +33,7 @@ gulp.task('select2i18n', function() {
 gulp.task('vendorjs', gulp.series(['select2i18n'], function() {
     return gulp.src([
             './node_modules/wordpress-media-gallery/dist/jquery.wp-media-uploader.min.js',
+            './node_modules/spectrum-colorpicker/spectrum.js',
             './node_modules/select2/dist/js/select2.min.js',
         ])
         .pipe(gulp.dest('./assets/js'));

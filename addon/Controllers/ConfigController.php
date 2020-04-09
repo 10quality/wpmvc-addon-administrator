@@ -14,6 +14,7 @@ use WPMVC\Addons\Administrator\Controls\MediaControl;
 use WPMVC\Addons\Administrator\Controls\TextareaControl;
 use WPMVC\Addons\Administrator\Controls\EditorControl;
 use WPMVC\Addons\Administrator\Controls\Select2Control;
+use WPMVC\Addons\Administrator\Controls\ColorpickerControl;
 
 /**
  * Add-on configuration hooks.
@@ -48,6 +49,7 @@ class ConfigController extends Controller
         $classes[TextareaControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\TextareaControl';
         $classes[EditorControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\EditorControl';
         $classes[Select2Control::TYPE] = 'WPMVC\Addons\Administrator\Controls\Select2Control';
+        $classes[ColorpickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\ColorpickerControl';
         return $classes;
     }
 }
