@@ -3,7 +3,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.2
+ * @version 1.0.4
  */
 
 /**
@@ -50,6 +50,27 @@ function uniqid( prefix, more_entropy )
                     .split( '|' )
                     .map( function( field ) {
                         field = field.split( ':' );
+                        if ( self.$el.data( 'repeater' ) !== undefined
+                            && $( '*[aria-field="' + field[0] + '"][data-repeater-key="' + self.$el.data( 'repeater-key' ) + '"]' ).length
+                        ) {
+                            var repeater_class = 'hsr-' + self.$el.data( 'repeater-key' ) + '-' + uniqid();
+                            $( '*[aria-field="' + field[0] + '"][data-repeater-key="' + self.$el.data( 'repeater-key' ) + '"]' ).addClass( repeater_class );
+                            field[0] = '.' + repeater_class;
+                        }
+                        if ( !$( field[0] ).is( 'input' )
+                            || !$( field[0] ).is( 'select' )
+                            || !$( field[0] ).is( 'textarea' )
+                        ) {
+                            var input_class = 'hsi-' + uniqid();
+                            if ( $( field[0] ).find( 'input' ).length ) {
+                                $( field[0] ).find( 'input' ).addClass( input_class );
+                            } else if ( $( field[0] ).find( 'select' ).length ) {
+                                $( field[0] ).find( 'select' ).addClass( input_class );
+                            } else if ( $( field[0] ).find( 'textarea' ).length ) {
+                                $( field[0] ).find( 'textarea' ).addClass( input_class );
+                            }
+                            field[0] = '.' + input_class;
+                        }
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
                 for ( var field_selector in self.fields ) {
@@ -100,6 +121,27 @@ function uniqid( prefix, more_entropy )
                     .split( '|' )
                     .map( function( field ) {
                         field = field.split( ':' );
+                        if ( self.$el.data( 'repeater' ) !== undefined
+                            && $( '*[aria-field="' + field[0] + '"][data-repeater-key="' + self.$el.data( 'repeater-key' ) + '"]' ).length
+                        ) {
+                            var repeater_class = 'hsr-' + self.$el.data( 'repeater-key' ) + '-' + uniqid();
+                            $( '*[aria-field="' + field[0] + '"][data-repeater-key="' + self.$el.data( 'repeater-key' ) + '"]' ).addClass( repeater_class );
+                            field[0] = '.' + repeater_class;
+                        }
+                        if ( !$( field[0] ).is( 'input' )
+                            || !$( field[0] ).is( 'select' )
+                            || !$( field[0] ).is( 'textarea' )
+                        ) {
+                            var input_class = 'hsi-' + uniqid();
+                            if ( $( field[0] ).find( 'input' ).length ) {
+                                $( field[0] ).find( 'input' ).addClass( input_class );
+                            } else if ( $( field[0] ).find( 'select' ).length ) {
+                                $( field[0] ).find( 'select' ).addClass( input_class );
+                            } else if ( $( field[0] ).find( 'textarea' ).length ) {
+                                $( field[0] ).find( 'textarea' ).addClass( input_class );
+                            }
+                            field[0] = '.' + input_class;
+                        }
                         self.fields[field[0]] = field[1].split( ',' );
                     } );
                 for ( var field_selector in self.fields ) {

@@ -285,6 +285,8 @@ class AdminController extends Controller
             if ( ! array_key_exists( 'class', $attributes ) )
                 $attributes['class'] = '';
             $attributes['class'] .= trim( ' ' . ( $helper->is_repeater_odd ? 'repeater-odd' : 'repeater-even' ) );
+            if ( array_key_exists( 'field_id', $field ) )
+                $attributes['aria-field'] = '#' . $field['field_id'];
         }
         if ( $helper->is_repeater_field ) {
             $attributes['data-repeater-field'] = 1;
