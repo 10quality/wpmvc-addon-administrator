@@ -78,12 +78,17 @@ function uniqid( prefix, more_entropy )
                         continue;
                     $( field_selector ).attr( 'data-listener-' + self.id, field_selector );
                     $( document ).on( 'change', field_selector, self.methods.on_listener );
+                    // For on_listen
+                    if ( self.$el.data( 'repeater' ) !== undefined )
+                        self.methods.on_listener( undefined, $( field_selector ) );
                 }
             },
-            on_listener: function()
+            on_listener: function( event, $input )
             {
-                var val = $( this ).val();
-                var field_selector = $( this ).data( 'listener-' + self.id );
+                if ( $input === undefined )
+                    $input = $( this )
+                var val = $input.val();
+                var field_selector = $input.data( 'listener-' + self.id );
                 if ( self.fields[field_selector]
                     .find( function( value ) { return value == val; } ) !== undefined
                 ) {
@@ -149,6 +154,9 @@ function uniqid( prefix, more_entropy )
                         continue;
                     $( field_selector ).attr( 'data-listener-' + self.id, field_selector );
                     $( document ).on( 'change', field_selector, self.methods.on_listener );
+                    // For on_listen
+                    if ( self.$el.data( 'repeater' ) !== undefined )
+                        self.methods.on_listener( undefined, $( field_selector ) );
                 }
             },
             on_listener: function()
@@ -183,5 +191,21 @@ function uniqid( prefix, more_entropy )
     } );
     $( '*[data-hide-if]' ).each( function() {
         $( this ).hide_listener();
+    } );
+    /**
+     * Repeater support, init datepicker after items is added
+     * @since 1.0.4
+     *
+     * @param {object} event
+     * @param {object} $items
+     * @param {string} key
+     */
+    $( document ).on( 'repeater:items.add.after', function( event, $items, key ) {
+        if ( $items.find( '*[data-repeater-key="' + key + '"][data-show-if]' ).length ) {
+            $items.find( '*[data-repeater-key="' + key + '"][data-show-if]' ).show_listener();
+        }
+        if ( $items.find( '*[data-repeater-key="' + key + '"][data-hide-if]' ).length ) {
+            $items.find( '*[data-repeater-key="' + key + '"][data-hide-if]' ).hide_listener();
+        }
     } );
 } ); } )( jQuery );
