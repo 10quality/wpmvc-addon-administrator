@@ -1,6 +1,6 @@
 <?php
 /**
- * Input control.
+ * Switch control.
  * WordPress MVC view.
  * 
  * @author 10 Quality <info@10quality.com>

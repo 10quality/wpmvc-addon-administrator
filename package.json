@@ -18,9 +18,10 @@
   "devDependencies": {
     "font-awesome": "^4.7.0",
     "gulp": "4.0.2",
+    "jquery-datetimepicker": "^2.5.21",
     "jquery-ui": "^1.12.1",
+    "select2": "^4.0.13",
     "spectrum-colorpicker": "^1.8.0",
-    "wordpress-media-gallery": "^1.2.0",
-    "select2": "^4.0.13"
+    "wordpress-media-gallery": "^1.2.0"
   }
 }

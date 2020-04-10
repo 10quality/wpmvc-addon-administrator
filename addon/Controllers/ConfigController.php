@@ -16,6 +16,7 @@ use WPMVC\Addons\Administrator\Controls\EditorControl;
 use WPMVC\Addons\Administrator\Controls\Select2Control;
 use WPMVC\Addons\Administrator\Controls\ColorpickerControl;
 use WPMVC\Addons\Administrator\Controls\SwitchControl;
+use WPMVC\Addons\Administrator\Controls\DatetimepickerControl;
 
 /**
  * Add-on configuration hooks.
@@ -52,6 +53,7 @@ class ConfigController extends Controller
         $classes[Select2Control::TYPE] = 'WPMVC\Addons\Administrator\Controls\Select2Control';
         $classes[ColorpickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\ColorpickerControl';
         $classes[SwitchControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\SwitchControl';
+        $classes[DatetimepickerControl::TYPE] = 'WPMVC\Addons\Administrator\Controls\DatetimepickerControl';
         return $classes;
     }
 }
