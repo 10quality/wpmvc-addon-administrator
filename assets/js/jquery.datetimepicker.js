@@ -18,13 +18,13 @@
             ? window[$( this ).data( 'allowed-timer' )]()
             : undefined;
         $( this ).datetimepicker( {
-            timepicker: $( this ).data( 'show-time' ) || true,
-            datepicker: $( this ).data( 'show-date' ) || true,
+            timepicker: $( this ).data( 'show-time' ) !== undefined ? $( this ).data( 'show-time' ) : true,
+            datepicker: $( this ).data( 'show-date' ) !== undefined ? $( this ).data( 'show-date' ) : true,
             format: $( this ).data( 'format' ) || 'Y-m-d H:i',
             startDate: $( this ).data( 'start-date' ) || undefined,
             minDate: $( this ).data( 'min-date' ) || undefined,
             maxDate: $( this ).data( 'max-date' ) || undefined,
-            mask: $( this ).data( 'mask' ) || false,
+            mask: $( this ).data( 'mask' ) !== undefined ? $( this ).data( 'mask' ) : false,
             i18n: i18n || undefined,
             allowTimes: allowTimes || undefined,
             lang: $( this ).attr( 'lang' ) || undefined,
@@ -48,13 +48,13 @@
                 ? window[$datetimepicker.data( 'allowed-timer' )]()
                 : undefined;
             $datetimepicker.datetimepicker( {
-                timepicker: $datetimepicker.data( 'show-time' ) || true,
-                datepicker: $datetimepicker.data( 'show-date' ) || true,
+                timepicker: $datetimepicker.data( 'show-time' ) !== undefined ? $datetimepicker.data( 'show-time' ) : true,
+                datepicker: $datetimepicker.data( 'show-date' ) !== undefined ? $datetimepicker.data( 'show-date' ) : true,
                 format: $datetimepicker.data( 'format' ) || 'Y-m-d H:i',
                 startDate: $datetimepicker.data( 'start-date' ) || undefined,
                 minDate: $datetimepicker.data( 'min-date' ) || undefined,
                 maxDate: $datetimepicker.data( 'max-date' ) || undefined,
-                mask: $datetimepicker.data( 'mask' ) || false,
+                mask: $datetimepicker.data( 'mask' ) !== undefined ? $datetimepicker.data( 'mask' ) : false,
                 i18n: i18n || undefined,
                 allowTimes: allowTimes || undefined,
                 lang: $datetimepicker.attr( 'lang' ) || undefined,
