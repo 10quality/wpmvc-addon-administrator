@@ -44,7 +44,7 @@ class DatetimepickerControl extends Control
             [],
             '2.5.21'
         );
-        wp_enqueue_style(
+        wp_enqueue_script(
             'jquery-datetimepicker',
             addon_assets_url( 'js/jquery.datetimepicker.min.js', __FILE__ ),
             ['jquery'],
