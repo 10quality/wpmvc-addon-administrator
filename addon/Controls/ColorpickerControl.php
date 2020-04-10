@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.5
  */
 class ColorpickerControl extends Control
 {
@@ -56,7 +56,7 @@ class ColorpickerControl extends Control
             'wpmvc-administrator-colorpicker',
             addon_assets_url( 'js/jquery.colorpicker.js', __FILE__ ),
             ['jquery', 'spectrum'],
-            '1.0.4',
+            '1.0.5',
             true
         );
         // i18n support
