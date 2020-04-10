@@ -14,8 +14,8 @@
         var i18n = $( this ).data( 'i18n' )
             ? window[$( this ).data( 'i18n' )]( $( this ).attr( 'lang' ) )
             : undefined;
-        var allowTimes = $( this ).data( 'allowed-timer' )
-            ? window[$( this ).data( 'allowed-timer' )]()
+        var allowTimes = $( this ).data( 'allowed-times' )
+            ? window[$( this ).data( 'allowed-times' )]()
             : undefined;
         $( this ).datetimepicker( {
             timepicker: $( this ).data( 'show-time' ) !== undefined ? $( this ).data( 'show-time' ) : true,
@@ -44,8 +44,8 @@
             var i18n = $datetimepicker.data( 'i18n' )
                 ? window[$datetimepicker.data( 'i18n' )]( $datetimepicker.attr( 'lang' ) )
                 : undefined;
-            var allowTimes = $datetimepicker.data( 'allowed-timer' )
-                ? window[$datetimepicker.data( 'allowed-timer' )]()
+            var allowTimes = $datetimepicker.data( 'allowed-times' )
+                ? window[$datetimepicker.data( 'allowed-times' )]()
                 : undefined;
             $datetimepicker.datetimepicker( {
                 timepicker: $datetimepicker.data( 'show-time' ) !== undefined ? $datetimepicker.data( 'show-time' ) : true,
