@@ -36,7 +36,7 @@ gulp.task('vendorjs', gulp.series(['select2i18n'], function() {
             './node_modules/wordpress-media-gallery/dist/jquery.wp-media-uploader.min.js',
             './node_modules/spectrum-colorpicker/spectrum.js',
             './node_modules/select2/dist/js/select2.min.js',
-            './node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.js',
+            './node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js',
         ])
         .pipe(gulp.dest('./assets/js'));
 }));
