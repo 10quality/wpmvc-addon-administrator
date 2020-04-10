@@ -3,7 +3,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.5
  */
 ( function( $ ) { $( document ).ready( function() {
     /**
@@ -14,8 +14,8 @@
         $( this ).mediaUploader( {
             editor: $( this ).data( 'editor' ),
             target: $( this ).data( 'target' ),
-            clearTarget: $( this ).data( 'clear-target' ) || true,
-            clearTemplate: $( this ).data( 'clear-template' ) || true,
+            clearTarget: $( this ).data( 'clear-target' ) !== undefined ? $( this ).attr( 'clear-target' ) : true,
+            clearTemplate: $( this ).data( 'clear-template' ) !== undefined ? $( this ).attr( 'clear-template' ) : true,
         } );
     } );
 } ); } )( jQuery );

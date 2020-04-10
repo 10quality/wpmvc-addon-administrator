@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.5
  */
 class MediaControl extends Control
 {
@@ -57,7 +57,7 @@ class MediaControl extends Control
             'wpmvc-administrator-media',
             addon_assets_url( 'js/jquery.media.js', __FILE__ ),
             ['wordpress-media-uploader'],
-            '1.0.0',
+            '1.0.5',
             true
         );
     }
