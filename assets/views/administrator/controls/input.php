@@ -16,7 +16,7 @@ $value = isset( $control ) && array_key_exists( 'type', $control ) && $control['
     name="<?php echo esc_attr( isset( $name ) ? $name : $id ) ?>"
     class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
     value="<?php echo $value ?>"
-    <?php if ( isset( $control ) && isset( $control['autocomplete'] ) && $control['autocomplete'] ) ?>
+    <?php if ( isset( $control ) && isset( $control['autocomplete'] ) && $control['autocomplete'] ) : ?>
         autocomplete="on"
     <?php else : ?>
         autocomplete="off"
