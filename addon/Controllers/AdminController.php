@@ -17,7 +17,7 @@ use WPMVC\Addons\Administrator\Helpers\RenderHelper;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.2
+ * @version 1.0.5
  */
 class AdminController extends Controller
 {
@@ -214,7 +214,7 @@ class AdminController extends Controller
             'wpmvc-administrator-hideshow',
             addon_assets_url( 'js/jquery.hide-show.js', __FILE__ ),
             ['jquery'],
-            '1.0.2',
+            '1.0.4',
             true
         );
         do_action( 'administrator_enqueue_' . $model->id );
