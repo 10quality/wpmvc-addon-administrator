@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.5
  */
 class Select2Control extends Control
 {
@@ -62,7 +62,7 @@ class Select2Control extends Control
             'wpmvc-administrator-select2',
             addon_assets_url( 'js/jquery.select2.js', __FILE__ ),
             ['select2'],
-            '1.0.4',
+            '1.0.5',
             true
         );
         // i18n support
