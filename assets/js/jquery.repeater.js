@@ -146,7 +146,7 @@
                 var index = self.$edited_field.closest( '*[data-repeater-field="1"]' )
                     .find( '*[name]' )
                     .attr( 'name' )
-                    .replace( /^[a-zA-Z0-9\-\_]+\[|\]/g, '' );
+                    .replace( /^[a-zA-Z0-9\-\_]+\[|\]\[|\]/g, '' );
                 self.$index_editor.find( 'input' ).val( index );
                 self.$index_editor.css({
                     top: self.$edited_field.offset().top - 5,
@@ -165,9 +165,12 @@
                     event.preventDefault();
                 var key = self.$edited_field.closest( '*[data-repeater-field="1"]' ).data( 'repeater-key' );
                 self.$items.find( '*[data-repeater-key="' + key + '"]' ).each( function() {
-                    var name = $( this ).find( '*[name]' )
-                        .attr( 'name' )
-                        .replace( /\[(|[\s\S]+)\]/g, '' ) + '[' + self.methods.slugify( self.$index_editor.find( 'input' ).val() ) + ']';
+                    var name = $( this ).find( '*[name]' ).attr( 'name' );
+                    var multidimension = name.match( /\[/g ).length;
+                    name = name.replace( /\[(|[\s\S]+)\]/g, '' ) + '[' + self.methods.slugify( self.$index_editor.find( 'input' ).val() ) + ']';
+                    for ( var i = 1; i < multidimension; i++ ) {
+                        name += '[]';
+                    }
                     $( this ).find( '*[name]' ).attr( 'name', name );
                 } );
                 self.$index_editor.hide();
@@ -179,7 +182,7 @@
                     $( this ).find( '.index-tag' ).remove();
                     var index = $( this ).find( '*[name]' )
                         .attr( 'name' )
-                        .replace( /^[a-zA-Z0-9\-\_]+\[|\]/g, '' )
+                        .replace( /^[a-zA-Z0-9\-\_]+\[|\]\[|\]/g, '' )
                         .trim();
                     if ( index && index !== '' ) {
                         var $template = $( $( document ).find( '#repeater-index-tag' ).html() );
