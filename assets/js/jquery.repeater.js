@@ -47,25 +47,7 @@
                     }
                 } );
                 $item.find( '*[id]' ).each( function() {
-                    var current_id = $( this ).attr( 'id' );
-                    var new_id = $( this ).attr( 'id' ) + '-' + uniqid();
-                    $( this ).attr( 'id', new_id );
-                    // Show if compatibility
-                    $item.find( '*[data-show-if]' ).each( function() {
-                        var show_if = $( this ).data( 'show-if' ).split( ':' );
-                        if ( show_if[0] === '#' + current_id ) {
-                            show_if[0] = '#' + new_id;
-                            $( this ).attr( 'data-show-if', show_if.join( ':' ) );
-                        }
-                    } );
-                    // Hide if compatibility
-                    $item.find( '*[data-hide-if]' ).each( function() {
-                        var hide_if = $( this ).data( 'hide-if' ).split( ':' );
-                        if ( hide_if[0] === '#' + current_id ) {
-                            hide_if[0] = '#' + new_id;
-                            $( this ).attr( 'data-hide-if', hide_if.join( ':' ) );
-                        }
-                    } );
+                    regen_id( $( this ), $item );
                 } );
                 var aux = 0;
                 $item.find( '*[data-repeater="1"]' ).each( function() {

@@ -69,6 +69,7 @@
      */
     $( '.select2' ).each( function() {
         var ajax = undefined;
+        regen_id( $( this ), undefined, 's2' );
         var $select2 = $( '#' + $( this ).attr( 'id' ) );
         if ( $select2.data( 'ajax' ) ) {
             ajax = {

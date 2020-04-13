@@ -3,7 +3,7 @@
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.5
  */
 
 /**
@@ -27,6 +27,57 @@ function uniqid( prefix, more_entropy )
     }
     return ( prefix !== undefined ? prefix : '' ) + id + more;
 };
+/**
+ * Regenerates element ID.
+ * Makes it unique.
+ * @since 1.0.5
+ *
+ * @param {object} $el   Element want the ID to be changed.
+ * @param {object} $item Repeater item. (optionl)
+ * @param {string} group Additional group identifier
+ */
+function regen_id( $el, $item, group )
+{
+    var $ = jQuery;
+    var current_id = $el.attr( 'id' );
+    var new_id = $el.attr( 'id' ) + ( group ? '-' + group : '' ) + '-' + uniqid();
+    new_id = new_id.replace( /[\[\]]+/g, '' );
+    $el.attr( 'id', new_id );
+    if ( $item && $item.length ) {
+        // Show if compatibility
+        $item.find( '*[data-show-if]' ).each( function() {
+            var show_if = $( this ).data( 'show-if' ).split( ':' );
+            if ( show_if[0] === '#' + current_id ) {
+                show_if[0] = '#' + new_id;
+                $( this ).attr( 'data-show-if', show_if.join( ':' ) );
+            }
+        } );
+        // Hide if compatibility
+        $item.find( '*[data-hide-if]' ).each( function() {
+            var hide_if = $( this ).data( 'hide-if' ).split( ':' );
+            if ( hide_if[0] === '#' + current_id ) {
+                hide_if[0] = '#' + new_id;
+                $( this ).attr( 'data-hide-if', hide_if.join( ':' ) );
+            }
+        } );
+    } else {
+        // Global replacement
+        $( '*[data-show-if]' ).each( function() {
+            var show_if = $( this ).data( 'show-if' ).split( ':' );
+            if ( show_if[0] === '#' + current_id ) {
+                show_if[0] = '#' + new_id;
+                $( this ).attr( 'data-show-if', show_if.join( ':' ) );
+            }
+        } );
+        $( '*[data-hide-if]' ).each( function() {
+            var hide_if = $( this ).data( 'hide-if' ).split( ':' );
+            if ( hide_if[0] === '#' + current_id ) {
+                hide_if[0] = '#' + new_id;
+                $( this ).attr( 'data-hide-if', hide_if.join( ':' ) );
+            }
+        } );
+    }
+}
 /**
  * jQuery script.
  * @since 1.0.2
