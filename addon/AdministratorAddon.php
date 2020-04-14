@@ -123,12 +123,7 @@ class AdministratorAddon extends Addon
      */
     public function admin_enqueue()
     {
-        wp_register_style(
-            'font-awesome',
-            addon_assets_url( 'css/font-awesome.min.css', __FILE__ ),
-            [],
-            '4.7.0'
-        );
+        wpmvc_register_addon_resource( 'font-awesome' );
     }
     /**
      * Returns settings models.

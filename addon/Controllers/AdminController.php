@@ -197,26 +197,8 @@ class AdminController extends Controller
             $control->enqueue();
         }
         wp_enqueue_style( 'font-awesome' );
-        wp_enqueue_style(
-            'wpmvc-administrator-repeater',
-            addon_assets_url( 'css/repeater.css', __FILE__ ),
-            [],
-            '1.0.1'
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-repeater',
-            addon_assets_url( 'js/jquery.repeater.js', __FILE__ ),
-            ['jquery'],
-            '1.0.1',
-            true
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-hideshow',
-            addon_assets_url( 'js/jquery.hide-show.js', __FILE__ ),
-            ['jquery'],
-            '1.0.4',
-            true
-        );
+        wpmvc_enqueue_addon_resource( 'wpmvc-hideshow' );
+        wpmvc_enqueue_addon_resource( 'wpmvc-repeater' );
         do_action( 'administrator_enqueue_' . $model->id );
         // Render header
         AdministratorAddon::view( 'administrator.header', ['model' => &$model, 'tab' => $current_tab] );
