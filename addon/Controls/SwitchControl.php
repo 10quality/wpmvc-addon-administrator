@@ -9,7 +9,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.6
  */
 class SwitchControl extends Control
 {
@@ -38,19 +38,7 @@ class SwitchControl extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'wpmvc-administrator-switch',
-            addon_assets_url( 'css/switch.css', __FILE__ ),
-            [],
-            '1.0.4'
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-switch',
-            addon_assets_url( 'js/jquery.switch.js', __FILE__ ),
-            ['jquery'],
-            '1.0.4',
-            true
-        );
+        wpmvc_enqueue_addon_resource( 'wpmvc-switch' );
     }
     /**
      * Renders output.

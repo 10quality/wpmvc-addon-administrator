@@ -9,7 +9,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.6
  */
 class RadioControl extends Control
 {
@@ -38,11 +38,6 @@ class RadioControl extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'wpmvc-administrator-radio',
-            addon_assets_url( 'css/radio.css', __FILE__ ),
-            [],
-            '1.0.0'
-        );
+        wpmvc_enqueue_addon_resource( 'wpmvc-radio' );
     }
 }

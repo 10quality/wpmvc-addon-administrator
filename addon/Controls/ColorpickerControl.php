@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.5
+ * @version 1.0.6
  */
 class ColorpickerControl extends Control
 {
@@ -39,36 +39,7 @@ class ColorpickerControl extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'spectrum',
-            addon_assets_url( 'css/spectrum.css', __FILE__ ),
-            [],
-            '1.8.0'
-        );
-        wp_enqueue_script(
-            'spectrum',
-            addon_assets_url( 'js/spectrum.js', __FILE__ ),
-            ['jquery'],
-            '1.8.0',
-            true
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-colorpicker',
-            addon_assets_url( 'js/jquery.colorpicker.js', __FILE__ ),
-            ['jquery', 'spectrum'],
-            '1.0.5',
-            true
-        );
-        // i18n support
-        $locale = substr( get_locale(), 0, 2 );
-        $filename = addon_assets_url( 'js/i18n/jquery.spectrum-' . $locale . '.js', __FILE__ );
-        if ( File::auth()->exists( $filename ) )
-            wp_enqueue_script(
-                'spectrum-i18n-' . $locale,
-                $filename,
-                ['spectrum'],
-                '1.8.0',
-                true
-            );
+        wpmvc_enqueue_addon_resource( 'spectrum' );
+        wpmvc_enqueue_addon_resource( 'wpmvc-colorpicker' );
     }
 }

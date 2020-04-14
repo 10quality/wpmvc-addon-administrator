@@ -9,7 +9,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.5
+ * @version 1.0.6
  */
 class DatetimepickerControl extends Control
 {
@@ -38,25 +38,7 @@ class DatetimepickerControl extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'jquery-datetimepicker',
-            addon_assets_url( 'css/jquery.datetimepicker.min.css', __FILE__ ),
-            [],
-            '2.5.21'
-        );
-        wp_enqueue_script(
-            'jquery-datetimepicker',
-            addon_assets_url( 'js/jquery.datetimepicker.full.min.js', __FILE__ ),
-            ['jquery'],
-            '2.5.21',
-            true
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-datetimepicker',
-            addon_assets_url( 'js/jquery.datetimepicker.js', __FILE__ ),
-            ['jquery-datetimepicker'],
-            '1.0.5',
-            true
-        );
+        wpmvc_enqueue_addon_resource( 'datetimepicker' );
+        wpmvc_enqueue_addon_resource( 'wpmvc-datetimepicker' );
     }
 }

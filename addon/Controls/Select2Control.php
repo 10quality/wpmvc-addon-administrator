@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.5
+ * @version 1.0.6
  */
 class Select2Control extends Control
 {
@@ -39,42 +39,7 @@ class Select2Control extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'select2',
-            addon_assets_url( 'css/select2.min.css', __FILE__ ),
-            [],
-            '4.0.13'
-        );
-        wp_enqueue_style(
-            'wpmvc-administrator-select2',
-            addon_assets_url( 'css/select2.css', __FILE__ ),
-            ['select2'],
-            '1.0.4'
-        );
-        wp_enqueue_script(
-            'select2',
-            addon_assets_url( 'js/select2.min.js', __FILE__ ),
-            ['jquery'],
-            '4.0.13',
-            true
-        );
-        wp_enqueue_script(
-            'wpmvc-administrator-select2',
-            addon_assets_url( 'js/jquery.select2.js', __FILE__ ),
-            ['select2'],
-            '1.0.5',
-            true
-        );
-        // i18n support
-        $locale = substr( get_locale(), 0, 2 );
-        $filename = addon_assets_url( 'js/i18n/' . $locale . '.js', __FILE__ );
-        if ( File::auth()->exists( $filename ) )
-            wp_enqueue_script(
-                'select2-i18n-' . $locale,
-                $filename,
-                ['select2'],
-                '4.0.13',
-                true
-            );
+        wpmvc_enqueue_addon_resource( 'select2' );
+        wpmvc_enqueue_addon_resource( 'wpmvc-select2' );
     }
 }

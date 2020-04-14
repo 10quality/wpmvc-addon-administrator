@@ -9,7 +9,7 @@ use WPMVC\Addons\Administrator\Abstracts\Control;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.6
  */
 class ChooseControl extends Control
 {
@@ -38,12 +38,7 @@ class ChooseControl extends Control
      */
     public function enqueue()
     {
-        wp_enqueue_style(
-            'wpmvc-administrator-choose',
-            addon_assets_url( 'css/choose.css', __FILE__ ),
-            [],
-            '1.0.0'
-        );
+        wpmvc_enqueue_addon_resource( 'wpmvc-choose' );
     }
     /**
      * Renders output.
