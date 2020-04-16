@@ -8,7 +8,7 @@
  * @license MIT
  * @version 1.0.6
  */
-$class = array_merge( ['button'], isset( $class ) ? $class : [] );
+$class = array_merge( ['media-uploader', 'button'], isset( $class ) ? $class : [] );
 ?>
 <div class="media-wrapper">
     <button role="media-uploader"
