@@ -7,7 +7,7 @@
         "php": ">=5.4.0",
         "10quality/wpmvc-core": ">=3.1.0",
         "10quality/wpmvc-addon": "1.0.*",
-        "10quality/wpmvc-addon-resources": "1.0.*",
+        "10quality/wpmvc-addon-resources": "1.0.*"
     },
     "autoload": {
         "files": [
