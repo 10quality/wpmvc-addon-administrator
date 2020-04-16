@@ -39,7 +39,7 @@ class MediaControl extends Control
      */
     public function enqueue()
     {
-        wpmvc_enqueue_addon_resource( 'wordpress-media-uploader' );
+        wpmvc_enqueue_addon_resource( 'wp-media-uploader' );
         wpmvc_enqueue_addon_resource( 'wpmvc-media' );
     }
     /**
