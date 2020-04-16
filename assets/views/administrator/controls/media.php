@@ -23,7 +23,9 @@ $class = array_merge( ['media-uploader', 'button'], isset( $class ) ? $class : [
         <?php endif ?>
         <?php echo $html_attributes ?>
     >
-        <?php if ( !isset( $control ) || !array_key_exists( 'show_icon', $control ) || $control['show_icon'] === true ) : ?>
+        <?php if ( ( !isset( $control ) || !array_key_exists( 'show_icon', $control ) || $control['show_icon'] === true )
+            && ( !isset( $control ) || !array_key_exists( 'icon', $control ) )
+        ) : ?>
             <span class="dashicons dashicons-admin-media"></span>
         <?php endif ?>
         <?php if ( isset( $control ) && array_key_exists( 'icon', $control ) ) : ?>
