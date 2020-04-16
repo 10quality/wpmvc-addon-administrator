@@ -19,7 +19,7 @@ $class = array_merge( ['media-uploader', 'button'], isset( $class ) ? $class : [
         value="<?php echo esc_attr( $value ) ?>"
         data-editor="editor-<?php echo esc_attr( $id ) ?>"
         <?php if ( isset( $control ) && array_key_exists( 'wide', $control ) && $control['wide'] ) : ?>
-            data-input-css="widefat"
+            data-input-class="widefat"
         <?php endif ?>
         <?php echo $html_attributes ?>
     >
