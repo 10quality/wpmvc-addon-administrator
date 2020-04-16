@@ -16,7 +16,7 @@ $class = array_merge( ['media-uploader', 'button'], isset( $class ) ? $class : [
         type="button"
         class="<?php echo esc_attr( implode( ' ', $class ) ) ?>"
         name="<?php echo esc_attr( isset( $name ) ? $name : $id ) ?>"
-        value="<?php echo esc_attr( $value ) ?>"
+        value="<?php echo esc_attr( is_array( $value ) ? implode( ',', $value ) : $value ) ?>"
         data-editor="editor-<?php echo esc_attr( $id ) ?>"
         <?php if ( isset( $control ) && array_key_exists( 'wide', $control ) && $control['wide'] ) : ?>
             data-input-class="widefat"
