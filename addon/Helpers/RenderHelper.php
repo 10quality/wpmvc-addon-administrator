@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.4
+ * @version 1.0.7
  */
 class RenderHelper
 {
@@ -130,7 +130,7 @@ class RenderHelper
                 $field['field_id'] = $field_id;
                 $field['value'] = $field['value'][$key];
                 $field['id'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. $key .']';
-                $field['name'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. ( is_numeric( $key ) ? '' : $key ) .']';
+                $field['name'] = ( array_key_exists( 'name', $field ) ? $field['name'] : $field_id ) . '['. $key .']';
                 $field['repeater_key'] = $key;
                 AdministratorAddon::view( 'administrator.repeater-field', [
                     'repeater_id' => &$this->repeater_id,
