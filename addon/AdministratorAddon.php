@@ -12,7 +12,7 @@ use WPMVC\Addon;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.2
+ * @version 1.0.7.3
  */
 class AdministratorAddon extends Addon
 {
@@ -40,7 +40,7 @@ class AdministratorAddon extends Addon
         if ( !isset( static::$instance ) ) {
             static::$instance = $this;
             add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
-            add_action( 'admin_menu', [&$this, 'settings_init'], 5 );
+            add_action( 'admin_menu', [&$this, 'settings_init'], 99 );
             add_filter( 'administrator_controls', [&$this, 'register_controls'], 1 );
             add_filter( 'administrator_no_value_fields', function() {
                 return [
