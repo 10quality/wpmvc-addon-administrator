@@ -18,7 +18,7 @@ use WPMVC\Addons\Administrator\Contracts\Manageable;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.8
  */
 class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Manageable
 {
@@ -221,7 +221,15 @@ class SettingsModel extends OptionModel implements Enqueueable, Instanceable, Ma
      */
     public function enqueue()
     {
-        // TODO: Based on control.
+        // TODO: Override in extended class.
+    }
+    /**
+     * Always called at the end, footer of the form.
+     * @since 1.0.8
+     */
+    public function footer()
+    {
+        // TODO: Override in extended class.
     }
     /**
      * Returns flag indicating if settings object is empty.

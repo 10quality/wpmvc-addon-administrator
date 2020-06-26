@@ -17,7 +17,7 @@ use WPMVC\Addons\Administrator\Helpers\RenderHelper;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.6
+ * @version 1.0.8
  */
 class AdminController extends Controller
 {
@@ -232,6 +232,7 @@ class AdminController extends Controller
         foreach ( $controls as $key => $control ) {
             $control->footer();
         }
+        $model->footer();
     }
     /**
      * Returns control's <tr> attributes.
