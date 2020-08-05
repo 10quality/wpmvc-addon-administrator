@@ -10,7 +10,7 @@ use WPMVC\Addons\Administrator\Abstracts\SettingsModel;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.8
+ * @version 1.0.9
  */
 class RenderHelper
 {
@@ -120,10 +120,12 @@ class RenderHelper
         // Get item keys
         $keys = [];
         foreach ( $this->repeater_fields as $field ) {
-            if ( array_key_exists( 'value' , $field ) && is_array( $field['value'] ) )
-                $keys = array_keys( $field['value'] );
-            if ( !empty( $keys ) )
-                break;
+            if ( array_key_exists( 'value' , $field ) && is_array( $field['value'] ) ) {
+                foreach ( array_keys( $field['value'] ) as $key ) {
+                    if ( !in_array( $key, $keys, true ) )
+                        $keys[] = $key;
+                }
+            }
         }
         $this->is_repeater_field = true;
         foreach ( $keys as $key ) {
