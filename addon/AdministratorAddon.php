@@ -12,7 +12,7 @@ use WPMVC\Addon;
  * @author 10 Quality <info@10quality.com>
  * @package wpmvc-addon-administrator
  * @license MIT
- * @version 1.0.7.3
+ * @version 1.0.10
  */
 class AdministratorAddon extends Addon
 {
@@ -30,6 +30,21 @@ class AdministratorAddon extends Addon
     public function init()
     {
         add_filter( 'administrator_models', [&$this, 'register_models'], 1 );
+        add_filter( 'administrator_no_value_fields', function() {
+            return [
+                'section_open',
+                'section_close',
+                'section_separator',
+                'callback',
+                'repeater_open',
+                'repeater_close',
+            ];
+        }, 1 );
+        add_filter( 'administrator_bool_fields', function() {
+            return [
+                'checkbox',
+            ];
+        }, 1 );
     }
     /**
      * Function called when user is on admin dashboard.
@@ -42,21 +57,6 @@ class AdministratorAddon extends Addon
             add_action( 'admin_enqueue_scripts', [&$this, 'admin_enqueue'], 99 );
             add_action( 'admin_menu', [&$this, 'settings_init'], 99 );
             add_filter( 'administrator_controls', [&$this, 'register_controls'], 1 );
-            add_filter( 'administrator_no_value_fields', function() {
-                return [
-                    'section_open',
-                    'section_close',
-                    'section_separator',
-                    'callback',
-                    'repeater_open',
-                    'repeater_close',
-                ];
-            }, 1 );
-            add_filter( 'administrator_bool_fields', function() {
-                return [
-                    'checkbox',
-                ];
-            }, 1 );
             add_filter( 'administrator_control_tr', [&$this, 'control_tr'], 99999, 4 );
             add_filter( 'administrator_control_section', [&$this, 'control_section'], 99999, 4 );
         }
