@@ -7,3 +7,4 @@
 .tmp
 composer.lock
 package-lock.json
+.phpunit.result.cache
