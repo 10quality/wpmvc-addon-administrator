@@ -19,5 +19,9 @@
             role="repeater-remove"
             title="<?php echo esc_attr( 'Remove', 'wpmvc-addon-administrator' ) ?>"
         ><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button type="button"
+                role="repeater-toggle-indicator"
+                title="Toggle Indicator"
+        ><i class="fa fa-caret-down" aria-hidden="true"></i></button>
     </div>
 </script>
